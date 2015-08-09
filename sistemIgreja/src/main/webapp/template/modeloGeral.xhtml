@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Igreja</title>
+	<style>
+	.semBorda tr, .semBorda td {
+		border: none !important;
+	}
+	table {
+	background-color: aqua;
+	}
+</style>
+</h:head>
+<h:body>
+
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north"
+			header="Sistema para gerenciamente de Igrejas" resizable="false"
+			closable="false" collapsible="false">
+
+		</p:layoutUnit>
+
+		<p:layoutUnit position="south"
+			header="Desenvolvido por Willian Fernandes de Oliveira Bueno"
+			resizable="false" closable="false" collapsible="false">
+		</p:layoutUnit>
+
+		<p:layoutUnit position="west" size="200" header="Menu Principal"
+			resizable="false" closable="false" collapsible="false">
+			<h:form>
+				<p:growl autoUpdate="true" />
+				<p:panelMenu style="width:190px">
+					<p:submenu label="Arquivo">
+						<p:menuitem value="Principal" outcome="/pages/principal.xhtml"
+							icon="ui-icon ui-icon-home" />
+						<p:menuitem value="Configuração" icon="ui-icon ui-icon-wrench" />
+						<p:menuitem value="Sair" icon="ui-icon ui-icon-power" />
+					</p:submenu>
+					<p:submenu label="Cadastro">
+						<p:menuitem value="Pessoa" outcome="/pages/pessoaPesquisa.xhtml"
+							icon="ui-icon ui-icon-document" />
+						<p:menuitem value="Igreja" icon="ui-icon ui-icon-document" />
+						<p:menuitem value="Patrimonio" icon="ui-icon ui-icon-document" />
+						<p:menuitem value="Oferta" icon="ui-icon ui-icon-document" />
+						<p:menuitem value="Dizimo" icon="ui-icon ui-icon-document" />
+						<p:menuitem value="Contas" icon="ui-icon ui-icon-document" />
+						<p:menuitem value="Agenda" icon="ui-icon ui-icon-document" />
+						<p:menuitem value="Carta" icon="ui-icon ui-icon-document" />
+					</p:submenu>
+					<p:submenu label="Relatorio">
+						<p:menuitem value="Carteirinha" />
+						<p:menuitem value="Agenda" />
+						<p:menuitem value="Lista de Membros" />
+						<p:menuitem value="Lista de Igreja" />
+						<p:menuitem value="Aniversariantes" />
+					</p:submenu>
+				</p:panelMenu>
+			</h:form>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center">
+			<ui:insert name="conteudo" />
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>
