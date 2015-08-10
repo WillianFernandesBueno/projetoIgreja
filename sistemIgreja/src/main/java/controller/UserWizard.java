@@ -1,40 +1,48 @@
 package controller;
 
-import java.io.IOException;
 import java.io.Serializable;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FlowEvent;
 
-import bean.User;
+import util.FacesUtil;
+import DAO.UsuarioHIB;
+import bean.Usuario;
 
 @ManagedBean
 @ViewScoped
 public class UserWizard implements Serializable {
-	private User user = new User();
+	private Usuario usuario;
     private boolean skip;
   
-    public User getUser() {
-        return user;
+    public UserWizard() {
+		usuario = new Usuario();
+		/*
+		 * aqui vou ter que popular a lista de igrejas
+		 */
+        System.out.println("lista de igrejas");
+	}
+
+	public Usuario getUser() {
+		return usuario;
     }
  
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Usuario user) {
+        this.usuario = user;
     }
      
-    public void save() {        
-        FacesMessage msg = new FacesMessage("Informação", user.getFirstname()+" cadastrado com sucesso");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        try {
-			FacesContext.getCurrentInstance().getExternalContext().redirect("pessoaPesquisa.xhtml");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    public void save() {     
+    	UsuarioHIB uh = new UsuarioHIB();
+    	uh.save(usuario);
+    	FacesUtil.addMsgInfo(usuario.getNome()+" cadastrado com sucesso");
+//        try {
+//			FacesContext.getCurrentInstance().getExternalContext().redirect("pessoaPesquisa.xhtml");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
     }
      
     public boolean isSkip() {

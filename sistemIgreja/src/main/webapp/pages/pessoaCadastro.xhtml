@@ -9,10 +9,8 @@
 
 	<ui:define name="conteudo">
 		<h:form>
-
-			<p:growl id="growl" sticky="true" showDetail="true" />
-
-			<p:wizard flowListener="#{userWizard.onFlowProcess}">
+			<p:wizard flowListener="#{userWizard.onFlowProcess}"
+				backLabel="Voltar" nextLabel="Avançar">
 				<p:tab id="personal" title="Personal">
 					<p:panel header="Detalhes Pessoais">
 						<p:messages />
@@ -21,39 +19,39 @@
 								columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
 								styleClass="ui-panelgrid-blank;">
 
-								<p:outputLabel value="Nome *" />
-								<p:inputText value="#{userWizard.user.firstname}"
-									required="true" label="Nome" styleClass="ui-grid-col-4" />
+								<p:outputLabel value="Nome*" />
+								<p:inputText value="#{userWizard.user.nome}"
+									required="false" label="Nome" styleClass="ui-grid-col-4" />
 
-								<p:outputLabel value="Nome da Mãe *" />
-								<p:inputText value="#{userWizard.user.firstname}"
-									required="true" label="Nome do Mãe" styleClass="ui-grid-col-4" />
+								<p:outputLabel value="Nome da Mãe*" />
+								<p:inputText value="#{userWizard.user.nomeMae}"
+									required="false" label="Nome do Mãe" styleClass="ui-grid-col-4" />
 
 								<p:outputLabel value="Nome do Pai*" />
-								<p:inputText value="#{userWizard.user.firstname}"
-									required="true" label="Nome da Pai" styleClass="ui-grid-col-4" />
+								<p:inputText value="#{userWizard.user.nomePai}"
+									required="false" label="Nome da Pai" styleClass="ui-grid-col-4" />
 
 								<p:outputLabel for="cpf" value="CPF" />
-								<p:inputMask id="cpf" value="#{userWizard.user.email}"
+								<p:inputMask id="cpf" value="#{userWizard.user.cpf}"
 									mask="999.999.999-99" styleClass="ui-grid-col-2"
 									required="false" />
 
 								<h:outputText value="RG" />
-								<p:inputText value="#{userWizard.user.firstname}" label="RG"
+								<p:inputText value="#{userWizard.user.rg}" label="RG"
 									styleClass="ui-grid-col-2" required="false" />
 
 								<p:outputLabel for="nascimento" value="Nascimento: " />
 								<p:inputMask id="nascimento"
-									value="#{userWizard.user.firstname}" mask="99/99/9999"
-									styleClass="ui-grid-col-2" required="true" />
+									value="#{userWizard.user.dataNascimento}" mask="99/99/9999"
+									styleClass="ui-grid-col-2" required="false" />
 
 								<p:outputLabel for="batismo" value="Date Batismo: " />
-								<p:inputMask id="batismo" value="#{userWizard.user.firstname}"
+								<p:inputMask id="batismo" value="#{userWizard.user.dataBatismo}"
 									mask="99/99/9999" styleClass="ui-grid-col-2" required="false" />
 
 								<h:outputText value="Situação" />
 								<p:selectOneMenu id="situacao"
-									value="#{userWizard.user.firstname}" styleClass="ui-grid-col-2"
+									value="#{userWizard.user.situacao}" styleClass="ui-grid-col-2"
 									required="true" editable="false" label="Situação">
 									<f:selectItem itemLabel="Em Comunhão" itemValue="emComunhao" />
 									<f:selectItem itemLabel="Fora da Comunhão"
@@ -63,7 +61,7 @@
 
 
 								<h:outputText value="Cargo" />
-								<p:selectOneMenu id="cargo" value="#{userWizard.user.firstname}"
+								<p:selectOneMenu id="cargo" value="#{userWizard.user.cargo}"
 									styleClass="ui-grid-col-2" required="true" editable="false"
 									label="Cargo">
 									<f:selectItem itemLabel="Visitante" itemValue="visitante" />
@@ -81,7 +79,7 @@
 
 								<h:outputText value="Estado Civil" />
 								<p:selectOneMenu id="estadoCivil"
-									value="#{userWizard.user.firstname}" styleClass="ui-grid-col-2"
+									value="#{userWizard.user.estadoCivil}" styleClass="ui-grid-col-2"
 									required="true" label="Estado Civil" editable="false">
 									<f:selectItem itemLabel="Solteiro" itemValue="solteiro" />
 									<f:selectItem itemLabel="Casado" itemValue="casado" />
@@ -90,7 +88,7 @@
 								</p:selectOneMenu>
 
 								<h:outputText value="Sexo" />
-								<p:selectOneMenu id="sexo" value="#{userWizard.user.firstname}"
+								<p:selectOneMenu id="sexo" value="#{userWizard.user.sexo}"
 									styleClass="ui-grid-col-2" required="false" label="Sexo"
 									editable="false">
 									<f:selectItem itemLabel="Masculino" itemValue="masculino" />
@@ -112,28 +110,25 @@
 				<p:tab id="address" title="Endereço">
 					<p:panel header="Detalhes do Endereço">
 						<p:messages />
-						<h:panelGrid columns="2" columnClasses="label, value">
+						<p:panelGrid columns="2"
+							columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
+							styleClass="ui-panelgrid-blank;">
+
 							<h:outputText value="Endereço: " />
-							<p:inputText value="#{userWizard.user.street}" size="30" />
+							<p:inputText value="#{userWizard.user.endereco}"
+								styleClass="ui-grid-col-4" />
 
 							<h:outputText value="Bairro: " />
-							<p:inputText value="#{userWizard.user.postalCode}" size="30" />
+							<p:inputText value="#{userWizard.user.bairro}"
+								styleClass="ui-grid-col-4" />
 
 							<h:outputText value="Complemento: " />
-							<p:inputText value="#{userWizard.user.postalCode}" size="30" />
-							<h:outputText value="Numero: " />
-							<p:inputText value="#{userWizard.user.city}" />
-
-							<h:outputText value="Cidade: " />
-							<p:inputText value="#{userWizard.user.city}" required="false" />
-
-							<h:outputText value="CEP: " />
-							<p:inputText value="#{userWizard.user.city}" />
+							<p:inputText value="#{userWizard.user.complemento}"
+								styleClass="ui-grid-col-4" />
 
 							<h:outputText value="Estado " />
-							<p:selectOneMenu id="Estado" value="#{userWizard.user.firstname}"
-								style="width:200px" required="false" label="Estado"
-								editable="false">
+							<p:selectOneMenu id="Estado" value="#{userWizard.user.estado}"
+								required="false" label="Estado" editable="false">
 								<f:selectItem itemLabel="Acre" itemValue="Acre" />
 								<f:selectItem itemLabel="Alagoas" itemValue="Alagoas" />
 								<f:selectItem itemLabel="Amapá" itemValue="Amapá" />
@@ -169,79 +164,66 @@
 								<f:selectItem itemLabel="Sergipe" itemValue="Sergipe" />
 								<f:selectItem itemLabel="Tocantins" itemValue="Tocantins" />
 							</p:selectOneMenu>
-						</h:panelGrid>
+
+							<h:outputText value="Numero: " />
+							<p:inputText value="#{userWizard.user.numero}"
+								styleClass="ui-grid-col-1" />
+
+							<h:outputText value="Cidade: " />
+							<p:inputText value="#{userWizard.user.cidade}" required="false"
+								styleClass="ui-grid-col-1" />
+
+							<h:outputText value="CEP: " />
+							<p:inputText value="#{userWizard.user.cep}"
+								styleClass="ui-grid-col-1" />
+
+						</p:panelGrid>
 					</p:panel>
 				</p:tab>
 
 				<p:tab id="contact" title="Contato">
 					<p:panel header="Informações do Contato">
 						<p:messages />
-						<h:panelGrid columns="2" columnClasses="label, value">
+						<p:panelGrid columns="2"
+							columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
+							styleClass="ui-panelgrid-blank;">
+
 							<h:outputText value="Email:" />
 							<p:inputText value="#{userWizard.user.email}" required="false"
-								label="Email" size="25" />
+								label="Email" styleClass="ui-grid-col-4" />
 
 							<h:outputText value="Telefone Fixo: " />
-							<p:inputText value="#{userWizard.user.phone}" size="8" />
+							<p:inputText value="#{userWizard.user.telefoneFixo}"
+								styleClass="ui-grid-col-1" />
 
-							<h:outputText value="Telefone Celular: " />
-							<p:inputText value="#{userWizard.user.phone}" size="8" />
+							<h:outputText value="Celular: " />
+							<p:inputText value="#{userWizard.user.telefoneCelular}"
+								styleClass="ui-grid-col-1" />
 
-							<h:outputText value="Informações adicionais: " />
-							<p:inputText value="#{userWizard.user.info}" size="25" />
-						</h:panelGrid>
+						</p:panelGrid>
 					</p:panel>
 				</p:tab>
 				<p:tab id="confirm" title="Confirmação">
-					<p:panel header="Confirmation">
-						<h:panelGrid id="confirmation" columns="3"
-							columnClasses="grid,grid,grid">
-							<h:panelGrid columns="2" columnClasses="label, value">
-								<h:outputText value="Firstname: " />
-								<h:outputText value="#{userWizard.user.firstname}"
-									styleClass="outputLabel" />
+					<p:panel header="Confirmação">
+						<p:panelGrid columns="2"
+							columnClasses="ui-grid-col-1,ui-grid-col-11" layout="grid"
+							styleClass="ui-panelgrid-blank;">
+							<h:outputText value="Nome: " />
+							<h:outputText value="#{userWizard.user.nome}"
+								styleClass="outputLabel" />
+
+						</p:panelGrid>
+						<p:toolbar>
+							<f:facet name="right">
+								<p:commandButton value="Salvar"
+									actionListener="#{userWizard.save}" update=":msgGlobal"
+									process="@this" label="Salvar" />
+							</f:facet>
+						</p:toolbar>
 
 
-								<h:outputText value="Age: " />
-								<h:outputText value="#{userWizard.user.age}"
-									styleClass="outputLabel" />
-							</h:panelGrid>
-
-							<h:panelGrid columns="2" columnClasses="label, value">
-								<h:outputText value="Street: " />
-								<h:outputText value="#{userWizard.user.street}"
-									styleClass="outputLabel" />
-
-								<h:outputText value="Postal: " />
-								<h:outputText value="#{userWizard.user.postalCode}"
-									styleClass="outputLabel" />
-
-								<h:outputText value="City: " />
-								<h:outputText value="#{userWizard.user.city}"
-									styleClass="outputLabel" />
-							</h:panelGrid>
-
-							<h:panelGrid columns="2" columnClasses="label, value">
-								<h:outputText value="Email: " />
-								<h:outputText value="#{userWizard.user.email}"
-									styleClass="outputLabel" />
-
-								<h:outputText value="Phone " />
-								<h:outputText value="#{userWizard.user.phone}"
-									styleClass="outputLabel" />
-
-								<h:outputText value="Info: " />
-								<h:outputText value="#{userWizard.user.info}"
-									styleClass="outputLabel" />
-
-								<h:outputText />
-								<h:outputText />
-							</h:panelGrid>
-						</h:panelGrid>
-						<p:commandButton value="Enviar"
-							actionListener="#{userWizard.save}" update="growl"
-							process="@this" />
 					</p:panel>
+
 				</p:tab>
 			</p:wizard>
 
