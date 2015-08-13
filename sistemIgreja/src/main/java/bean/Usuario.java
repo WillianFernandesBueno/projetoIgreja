@@ -1,12 +1,15 @@
 package bean;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.primefaces.model.UploadedFile;
 
 @Entity
 @Table(name="usuario")
@@ -19,8 +22,8 @@ public class Usuario implements Serializable {
 	private String nomePai;
 	private String cpf;
 	private String rg;
-	private String dataNascimento;
-	private String dataBatismo;
+	private Date dataNascimento;
+	private Date dataBatismo;
 	private String situacao;
 	private String cargo;
 	private String estadoCivil;
@@ -36,7 +39,10 @@ public class Usuario implements Serializable {
 	private String email;
 	private String telefoneFixo;
 	private String telefoneCelular;
-	
+	private String observacao;
+	private String foto;	 
+
+	     
 	@Id
 	@GeneratedValue
 	@Column(name="id")
@@ -112,20 +118,20 @@ public class Usuario implements Serializable {
 	}
 
 	@Column(name="dataNascimento")
-	public String getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(String dataNascimento) {
+	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
 	@Column(name="dataBatismo")
-	public String getDataBatismo() {
+	public Date getDataBatismo() {
 		return dataBatismo;
 	}
 
-	public void setDataBatismo(String dataBatismo) {
+	public void setDataBatismo(Date dataBatismo) {
 		this.dataBatismo = dataBatismo;
 	}
 
@@ -245,4 +251,24 @@ public class Usuario implements Serializable {
 	public void setTelefoneCelular(String telefoneCelular) {
 		this.telefoneCelular = telefoneCelular;
 	}
+	
+	@Column(name="observacao")
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+	
+	@Column(name="foto")
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+	
+	
 }

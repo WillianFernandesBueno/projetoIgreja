@@ -9,7 +9,7 @@
 
 	<ui:define name="conteudo">
 		<h:form>
-			<p:wizard flowListener="#{userWizard.onFlowProcess}"
+			<p:wizard flowListener="#{userWizardUsuario.onFlowProcess}"
 				backLabel="Voltar" nextLabel="Avançar">
 				<p:tab id="personal" title="Personal">
 					<p:panel header="Detalhes Pessoais">
@@ -20,39 +20,44 @@
 								styleClass="ui-panelgrid-blank;">
 
 								<p:outputLabel value="Nome*" />
-								<p:inputText value="#{userWizard.user.nome}"
+								<p:inputText value="#{userWizardUsuario.usuario.nome}"
 									required="false" label="Nome" styleClass="ui-grid-col-4" />
 
 								<p:outputLabel value="Nome da Mãe*" />
-								<p:inputText value="#{userWizard.user.nomeMae}"
+								<p:inputText value="#{userWizardUsuario.usuario.nomeMae}"
 									required="false" label="Nome do Mãe" styleClass="ui-grid-col-4" />
 
 								<p:outputLabel value="Nome do Pai*" />
-								<p:inputText value="#{userWizard.user.nomePai}"
+								<p:inputText value="#{userWizardUsuario.usuario.nomePai}"
 									required="false" label="Nome da Pai" styleClass="ui-grid-col-4" />
 
-								<p:outputLabel for="cpf" value="CPF" />
-								<p:inputMask id="cpf" value="#{userWizard.user.cpf}"
+								<p:outputLabel value="CPF" />
+								<p:inputMask value="#{userWizardUsuario.usuario.cpf}"
 									mask="999.999.999-99" styleClass="ui-grid-col-2"
-									required="false" />
+									required="false" converter="convertInput" label="CPF" />
 
 								<h:outputText value="RG" />
-								<p:inputText value="#{userWizard.user.rg}" label="RG"
-									styleClass="ui-grid-col-2" required="false" />
+								<p:inputText value="#{userWizardUsuario.usuario.rg}" label="RG"
+									styleClass="ui-grid-col-2" required="false" lang="RG" />
 
-								<p:outputLabel for="nascimento" value="Nascimento: " />
-								<p:inputMask id="nascimento"
-									value="#{userWizard.user.dataNascimento}" mask="99/99/9999"
-									styleClass="ui-grid-col-2" required="false" />
 
-								<p:outputLabel for="batismo" value="Date Batismo: " />
-								<p:inputMask id="batismo" value="#{userWizard.user.dataBatismo}"
-									mask="99/99/9999" styleClass="ui-grid-col-2" required="false" />
+								<p:outputLabel value="Nascimento: " />
+								<p:calendar value="#{userWizardUsuario.usuario.dataNascimento}"
+									pattern="dd-MM-yyyy" mask="true" locale="pt" required="false"
+									label="Data Nascimento" />
+
+
+								<p:outputLabel value="Date Batismo: " />
+								<p:calendar value="#{userWizardUsuario.usuario.dataBatismo}"
+									pattern="dd-MM-yyyy" mask="true" locale="pt" required="false"
+									label="Data Batismo" />
+
 
 								<h:outputText value="Situação" />
 								<p:selectOneMenu id="situacao"
-									value="#{userWizard.user.situacao}" styleClass="ui-grid-col-2"
-									required="true" editable="false" label="Situação">
+									value="#{userWizardUsuario.usuario.situacao}"
+									styleClass="ui-grid-col-2" required="false" editable="false"
+									label="Situação">
 									<f:selectItem itemLabel="Em Comunhão" itemValue="emComunhao" />
 									<f:selectItem itemLabel="Fora da Comunhão"
 										itemValue="foraComunhao" />
@@ -61,8 +66,9 @@
 
 
 								<h:outputText value="Cargo" />
-								<p:selectOneMenu id="cargo" value="#{userWizard.user.cargo}"
-									styleClass="ui-grid-col-2" required="true" editable="false"
+								<p:selectOneMenu id="cargo"
+									value="#{userWizardUsuario.usuario.cargo}"
+									styleClass="ui-grid-col-2" required="false" editable="false"
 									label="Cargo">
 									<f:selectItem itemLabel="Visitante" itemValue="visitante" />
 									<f:selectItem itemLabel="Novo Convertido"
@@ -79,8 +85,9 @@
 
 								<h:outputText value="Estado Civil" />
 								<p:selectOneMenu id="estadoCivil"
-									value="#{userWizard.user.estadoCivil}" styleClass="ui-grid-col-2"
-									required="true" label="Estado Civil" editable="false">
+									value="#{userWizardUsuario.usuario.estadoCivil}"
+									styleClass="ui-grid-col-2" required="false"
+									label="Estado Civil" editable="false">
 									<f:selectItem itemLabel="Solteiro" itemValue="solteiro" />
 									<f:selectItem itemLabel="Casado" itemValue="casado" />
 									<f:selectItem itemLabel="Divorciado" itemValue="divorciado" />
@@ -88,7 +95,8 @@
 								</p:selectOneMenu>
 
 								<h:outputText value="Sexo" />
-								<p:selectOneMenu id="sexo" value="#{userWizard.user.sexo}"
+								<p:selectOneMenu id="sexo"
+									value="#{userWizardUsuario.usuario.sexo}"
 									styleClass="ui-grid-col-2" required="false" label="Sexo"
 									editable="false">
 									<f:selectItem itemLabel="Masculino" itemValue="masculino" />
@@ -96,11 +104,9 @@
 								</p:selectOneMenu>
 
 
-
-
 								<h:outputText value="Dirigente" />
-								<p:selectBooleanCheckbox value="#{userWizard.user.dirigente}" />
-
+								<p:selectBooleanCheckbox
+									value="#{userWizardUsuario.usuario.dirigente}" />
 
 							</p:panelGrid>
 
@@ -115,20 +121,21 @@
 							styleClass="ui-panelgrid-blank;">
 
 							<h:outputText value="Endereço: " />
-							<p:inputText value="#{userWizard.user.endereco}"
+							<p:inputText value="#{userWizardUsuario.usuario.endereco}"
 								styleClass="ui-grid-col-4" />
 
 							<h:outputText value="Bairro: " />
-							<p:inputText value="#{userWizard.user.bairro}"
+							<p:inputText value="#{userWizardUsuario.usuario.bairro}"
 								styleClass="ui-grid-col-4" />
 
 							<h:outputText value="Complemento: " />
-							<p:inputText value="#{userWizard.user.complemento}"
+							<p:inputText value="#{userWizardUsuario.usuario.complemento}"
 								styleClass="ui-grid-col-4" />
 
 							<h:outputText value="Estado " />
-							<p:selectOneMenu id="Estado" value="#{userWizard.user.estado}"
-								required="false" label="Estado" editable="false">
+							<p:selectOneMenu id="Estado"
+								value="#{userWizardUsuario.usuario.estado}" required="false"
+								label="Estado" editable="false">
 								<f:selectItem itemLabel="Acre" itemValue="Acre" />
 								<f:selectItem itemLabel="Alagoas" itemValue="Alagoas" />
 								<f:selectItem itemLabel="Amapá" itemValue="Amapá" />
@@ -166,16 +173,17 @@
 							</p:selectOneMenu>
 
 							<h:outputText value="Numero: " />
-							<p:inputText value="#{userWizard.user.numero}"
+							<p:inputText value="#{userWizardUsuario.usuario.numero}"
 								styleClass="ui-grid-col-1" />
 
 							<h:outputText value="Cidade: " />
-							<p:inputText value="#{userWizard.user.cidade}" required="false"
-								styleClass="ui-grid-col-1" />
+							<p:inputText value="#{userWizardUsuario.usuario.cidade}"
+								required="false" styleClass="ui-grid-col-1" />
 
 							<h:outputText value="CEP: " />
-							<p:inputText value="#{userWizard.user.cep}"
-								styleClass="ui-grid-col-1" />
+							<p:inputMask value="#{userWizardUsuario.usuario.cep}"
+								mask="99999-999" styleClass="ui-grid-col-2" required="false"
+								converter="convertInput" label="CEP" />
 
 						</p:panelGrid>
 					</p:panel>
@@ -189,34 +197,146 @@
 							styleClass="ui-panelgrid-blank;">
 
 							<h:outputText value="Email:" />
-							<p:inputText value="#{userWizard.user.email}" required="false"
-								label="Email" styleClass="ui-grid-col-4" />
+							<p:inputText value="#{userWizardUsuario.usuario.email}"
+								required="false" label="Email" styleClass="ui-grid-col-4" />
 
 							<h:outputText value="Telefone Fixo: " />
-							<p:inputText value="#{userWizard.user.telefoneFixo}"
-								styleClass="ui-grid-col-1" />
+							<p:inputMask value="#{userWizardUsuario.usuario.telefoneFixo}"
+								mask="(99)9999-9999" styleClass="ui-grid-col-2" required="false"
+								converter="convertInput" label="Telefone Fixo" />
 
 							<h:outputText value="Celular: " />
-							<p:inputText value="#{userWizard.user.telefoneCelular}"
-								styleClass="ui-grid-col-1" />
+							<p:inputMask value="#{userWizardUsuario.usuario.telefoneCelular}"
+								mask="(99)9999-9999" styleClass="ui-grid-col-2" required="false"
+								converter="convertInput" label="Telefone Celular" />
+
+							<h:outputText value="Observação: " />
+							<p:inputText value="#{userWizardUsuario.usuario.observacao}"
+								required="false" label="Nome" styleClass="ui-grid-col-4" />
 
 						</p:panelGrid>
 					</p:panel>
 				</p:tab>
-				<p:tab id="confirm" title="Confirmação">
-					<p:panel header="Confirmação">
+
+
+				<p:tab id="imagem" title="Imagem">
+					<p:panel header="Foto do Usuario">
+						<p:messages />
 						<p:panelGrid columns="2"
 							columnClasses="ui-grid-col-1,ui-grid-col-11" layout="grid"
 							styleClass="ui-panelgrid-blank;">
-							<h:outputText value="Nome: " />
-							<h:outputText value="#{userWizard.user.nome}"
-								styleClass="outputLabel" />
+							<p:fileUpload
+								fileUploadListener="#{userWizardUsuario.uploadAction}"
+								mode="advanced" label="Buscar" cancelLabel="Cancelar"
+								uploadLabel="Enviar" fileLimit="1" update="messages" />
+							<p:growl id="messages" showDetail="true" />
+							
+							<h:graphicImage value="./image/1439421574113.jpg"/>
+						</p:panelGrid>
+
+					</p:panel>
+				</p:tab>
+
+				<p:tab id="confirm" title="Confirmação">
+					<p:panel header="Confirmação">
+						<p:panelGrid columns="4"
+							ColumnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+							layout="grid" styleClass="ui-panelgrid-blank;">
+
+
+							<p:outputLabel value="Nome" />
+							<p:inputText value="#{userWizardUsuario.usuario.nome}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="Nome da Mãe" />
+							<p:inputText value="#{userWizardUsuario.usuario.nomeMae}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="Nome do Pai" />
+							<p:inputText value="#{userWizardUsuario.usuario.nomePai}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="CPF" />
+							<p:inputText value="#{userWizardUsuario.usuario.cpf}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="RG" />
+							<p:inputText value="#{userWizardUsuario.usuario.rg}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="Data Nascimento" />
+							<p:inputText value="#{userWizardUsuario.usuario.dataNascimento}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="Data Batismo" />
+							<p:inputText value="#{userWizardUsuario.usuario.dataBatismo}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="Situaçaõ" />
+							<p:inputText value="#{userWizardUsuario.usuario.situacao}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="Cargo" />
+							<p:inputText value="#{userWizardUsuario.usuario.cargo}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="Estado Civil" />
+							<p:inputText value="#{userWizardUsuario.usuario.estadoCivil}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="Sexo" />
+							<p:inputText value="#{userWizardUsuario.usuario.sexo}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="Dirigente" />
+							<p:inputText value="#{userWizardUsuario.usuario.dirigente}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="Endereço" />
+							<p:inputText value="#{userWizardUsuario.usuario.endereco}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="Bairro" />
+							<p:inputText value="#{userWizardUsuario.usuario.bairro}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="Complemento" />
+							<p:inputText value="#{userWizardUsuario.usuario.complemento}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="Numero" />
+							<p:inputText value="#{userWizardUsuario.usuario.numero}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="Cidade" />
+							<p:inputText value="#{userWizardUsuario.usuario.cidade}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="CEP" />
+							<p:inputText value="#{userWizardUsuario.usuario.cep}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="E-mail" />
+							<p:inputText value="#{userWizardUsuario.usuario.email}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="Telefone Fixo" />
+							<p:inputText value="#{userWizardUsuario.usuario.telefoneFixo}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="Telefone Celular" />
+							<p:inputText value="#{userWizardUsuario.usuario.telefoneCelular}"
+								required="false" disabled="true" />
+
+							<p:outputLabel value="Observação" />
+							<p:inputText value="#{userWizardUsuario.usuario.observacao}"
+								required="false" disabled="true" />
 
 						</p:panelGrid>
 						<p:toolbar>
 							<f:facet name="right">
 								<p:commandButton value="Salvar"
-									actionListener="#{userWizard.save}" update=":msgGlobal"
+									actionListener="#{userWizardUsuario.save}" update=":msgGlobal"
 									process="@this" label="Salvar" />
 							</f:facet>
 						</p:toolbar>
