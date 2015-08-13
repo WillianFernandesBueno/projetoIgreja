@@ -21,15 +21,15 @@
 
 								<p:outputLabel value="Nome*" />
 								<p:inputText value="#{userWizardUsuario.usuario.nome}"
-									required="false" label="Nome" styleClass="ui-grid-col-4" />
+									required="true" label="Nome" styleClass="ui-grid-col-4" />
 
 								<p:outputLabel value="Nome da Mãe*" />
 								<p:inputText value="#{userWizardUsuario.usuario.nomeMae}"
-									required="false" label="Nome do Mãe" styleClass="ui-grid-col-4" />
+									required="true" label="Nome do Mãe" styleClass="ui-grid-col-4" />
 
 								<p:outputLabel value="Nome do Pai*" />
 								<p:inputText value="#{userWizardUsuario.usuario.nomePai}"
-									required="false" label="Nome da Pai" styleClass="ui-grid-col-4" />
+									required="true" label="Nome da Pai" styleClass="ui-grid-col-4" />
 
 								<p:outputLabel value="CPF" />
 								<p:inputMask value="#{userWizardUsuario.usuario.cpf}"
@@ -43,7 +43,7 @@
 
 								<p:outputLabel value="Nascimento: " />
 								<p:calendar value="#{userWizardUsuario.usuario.dataNascimento}"
-									pattern="dd-MM-yyyy" mask="true" locale="pt" required="false"
+									pattern="dd-MM-yyyy" mask="true" locale="pt" required="true"
 									label="Data Nascimento" />
 
 
@@ -56,7 +56,7 @@
 								<h:outputText value="Situação" />
 								<p:selectOneMenu id="situacao"
 									value="#{userWizardUsuario.usuario.situacao}"
-									styleClass="ui-grid-col-2" required="false" editable="false"
+									styleClass="ui-grid-col-2" required="true" editable="false"
 									label="Situação">
 									<f:selectItem itemLabel="Em Comunhão" itemValue="emComunhao" />
 									<f:selectItem itemLabel="Fora da Comunhão"
@@ -68,7 +68,7 @@
 								<h:outputText value="Cargo" />
 								<p:selectOneMenu id="cargo"
 									value="#{userWizardUsuario.usuario.cargo}"
-									styleClass="ui-grid-col-2" required="false" editable="false"
+									styleClass="ui-grid-col-2" required="true" editable="false"
 									label="Cargo">
 									<f:selectItem itemLabel="Visitante" itemValue="visitante" />
 									<f:selectItem itemLabel="Novo Convertido"
@@ -86,7 +86,7 @@
 								<h:outputText value="Estado Civil" />
 								<p:selectOneMenu id="estadoCivil"
 									value="#{userWizardUsuario.usuario.estadoCivil}"
-									styleClass="ui-grid-col-2" required="false"
+									styleClass="ui-grid-col-2" required="true"
 									label="Estado Civil" editable="false">
 									<f:selectItem itemLabel="Solteiro" itemValue="solteiro" />
 									<f:selectItem itemLabel="Casado" itemValue="casado" />
@@ -97,7 +97,7 @@
 								<h:outputText value="Sexo" />
 								<p:selectOneMenu id="sexo"
 									value="#{userWizardUsuario.usuario.sexo}"
-									styleClass="ui-grid-col-2" required="false" label="Sexo"
+									styleClass="ui-grid-col-2" required="true" label="Sexo"
 									editable="false">
 									<f:selectItem itemLabel="Masculino" itemValue="masculino" />
 									<f:selectItem itemLabel="Ferminino" itemValue="feminino" />
@@ -134,7 +134,7 @@
 
 							<h:outputText value="Estado " />
 							<p:selectOneMenu id="Estado"
-								value="#{userWizardUsuario.usuario.estado}" required="false"
+								value="#{userWizardUsuario.usuario.estado}" required="true"
 								label="Estado" editable="false">
 								<f:selectItem itemLabel="Acre" itemValue="Acre" />
 								<f:selectItem itemLabel="Alagoas" itemValue="Alagoas" />
@@ -178,11 +178,11 @@
 
 							<h:outputText value="Cidade: " />
 							<p:inputText value="#{userWizardUsuario.usuario.cidade}"
-								required="false" styleClass="ui-grid-col-1" />
+								required="true" styleClass="ui-grid-col-1" />
 
 							<h:outputText value="CEP: " />
 							<p:inputMask value="#{userWizardUsuario.usuario.cep}"
-								mask="99999-999" styleClass="ui-grid-col-2" required="false"
+								mask="99999-999" styleClass="ui-grid-col-2" required="true"
 								converter="convertInput" label="CEP" />
 
 						</p:panelGrid>
@@ -220,18 +220,14 @@
 
 
 				<p:tab id="imagem" title="Imagem">
+
+
 					<p:panel header="Foto do Usuario">
 						<p:messages />
 						<p:panelGrid columns="2"
-							columnClasses="ui-grid-col-1,ui-grid-col-11" layout="grid"
+							columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
 							styleClass="ui-panelgrid-blank;">
-							<p:fileUpload
-								fileUploadListener="#{userWizardUsuario.uploadAction}"
-								mode="advanced" label="Buscar" cancelLabel="Cancelar"
-								uploadLabel="Enviar" fileLimit="1" update="messages" />
-							<p:growl id="messages" showDetail="true" />
-							
-							<h:graphicImage value="./image/1439421574113.jpg"/>
+							<p:commandButton value="Buscar Imagem" onclick="PF('dlgfoto').show();" />
 						</p:panelGrid>
 
 					</p:panel>
@@ -239,10 +235,14 @@
 
 				<p:tab id="confirm" title="Confirmação">
 					<p:panel header="Confirmação">
+						<p:panelGrid columns="1" ColumnClasses="ui-grid-col-12"
+							layout="grid" styleClass="ui-panelgrid-blank;">
+							<p:graphicImage height="150" width="150"
+								url="#{userWizardUsuario.retornaFoto()}" />
+						</p:panelGrid>
 						<p:panelGrid columns="4"
 							ColumnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
 							layout="grid" styleClass="ui-panelgrid-blank;">
-
 
 							<p:outputLabel value="Nome" />
 							<p:inputText value="#{userWizardUsuario.usuario.nome}"
@@ -346,8 +346,17 @@
 
 				</p:tab>
 			</p:wizard>
-
 		</h:form>
+		<p:dialog header="Enviar foto" width="60%" height="350"
+			widgetVar="dlgfoto" resizable="false" modal="true" appendTo="@(body)"
+			closable="true" draggable="false" closeOnEscid="modal">
+			<h:form>
+				<p:fileUpload fileUploadListener="#{userWizardUsuario.uploadAction}"
+					mode="advanced" label="Buscar" cancelLabel="Cancelar"
+					uploadLabel="Processar Imagem" fileLimit="1" update="messages" />
+				<p:growl id="messages" showDetail="true" />
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

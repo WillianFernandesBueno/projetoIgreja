@@ -21,7 +21,6 @@
 	</servlet-mapping>
 	
 	
-	
 	<filter>
 		<filter-name>primeUploadFilter</filter-name>
 		<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
