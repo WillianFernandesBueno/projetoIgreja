@@ -18,28 +18,28 @@
 						styleClass="ui-panelgrid-blank;">
 
 						<p:outputLabel value="Nome*" />
-						<p:inputText value="#{userWizardUsuario.usuario.nome}"
+						<p:inputText value="#{igrejaMB.igreja.nome}"
 							required="true" label="Nome" styleClass="ui-grid-col-4" />
 
 						<h:outputText value="Email:" />
-						<p:inputText value="#{userWizardUsuario.usuario.email}"
+						<p:inputText value="#{igrejaMB.igreja.email}"
 							required="false" label="Email" styleClass="ui-grid-col-4" />
 
 						<h:outputText value="Endereço: " />
-						<p:inputText value="#{userWizardUsuario.usuario.endereco}"
-							styleClass="ui-grid-col-4" />
+						<p:inputText value="#{igrejaMB.igreja.endereco}"
+							styleClass="ui-grid-col-4"  />
 
 						<h:outputText value="Bairro: " />
-						<p:inputText value="#{userWizardUsuario.usuario.bairro}"
+						<p:inputText value="#{igrejaMB.igreja.bairro}"
 							styleClass="ui-grid-col-4" />
 
 						<h:outputText value="Complemento: " />
-						<p:inputText value="#{userWizardUsuario.usuario.complemento}"
+						<p:inputText value="#{igrejaMB.igreja.complemento}"
 							styleClass="ui-grid-col-4" />
 
 						<h:outputText value="Estado " />
 						<p:selectOneMenu id="Estado"
-							value="#{userWizardUsuario.usuario.estado}" required="true"
+							value="#{igrejaMB.igreja.estado}" required="true"
 							label="Estado" editable="false">
 							<f:selectItem itemLabel="Acre" itemValue="Acre" />
 							<f:selectItem itemLabel="Alagoas" itemValue="Alagoas" />
@@ -79,18 +79,18 @@
 
 
 						<h:outputText value="Cidade: " />
-						<p:inputText value="#{userWizardUsuario.usuario.cidade}"
-							required="true" styleClass="ui-grid-col-2" />
+						<p:inputText value="#{igrejaMB.igreja.cidade}"
+							required="true" styleClass="ui-grid-col-2" label="Cidade" />
 
 						<h:outputText value="CEP: " />
-						<p:inputMask value="#{userWizardUsuario.usuario.cep}"
+						<p:inputMask value="#{igrejaMB.igreja.cep}"
 							mask="99999-999" styleClass="ui-grid-col-2" required="true"
 							converter="convertInput" label="CEP" />
 
 
 
 						<h:outputText value="Telefone: " />
-						<p:inputMask value="#{userWizardUsuario.usuario.telefoneFixo}"
+						<p:inputMask value="#{igrejaMB.igreja.telefone}"
 							mask="(99)9999-9999" styleClass="ui-grid-col-2" required="false"
 							converter="convertInput" label="Telefone Fixo" />
 
@@ -98,8 +98,7 @@
 					<p:toolbar>
 						<f:facet name="left">
 							<p:commandButton value="Salvar"
-								actionListener="#{userWizardUsuario.save}" update=":msgGlobal"
-								process="@this" label="Salvar" />
+								actionListener="#{igrejaMB.save}" label="Salvar" />
 						</f:facet>
 					</p:toolbar>
 

@@ -5,6 +5,8 @@
 	<persistence-unit name="sistemaIgreja">
 		<!-- provedor/implementacao do JPA -->
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>bean.Igreja</class>
+		<class>bean.Usuario</class>
 
 		<!-- DADOS CONEXAO -->
 		<properties>

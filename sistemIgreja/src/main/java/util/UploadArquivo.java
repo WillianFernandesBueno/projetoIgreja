@@ -55,17 +55,15 @@ public class UploadArquivo {
 			this.caminhoBack = diretoriobackup+getNome();
 			this.arquivo = event.getFile().getContents();
 			File file = new File(getRealPath() + diretorio);
-			System.out.println(file.getPath());
 			file.mkdirs();
 		} catch (Exception ex) {
 			System.out.println("Erro no upload do arquivo" + ex);
 		}
 	}
-	
+
 	//grava o arquivo no diretório informado.
 	public void gravar(){
 		//realizar backup das imagens em uma pasta fora do servidor de aplicação
-		Backup();
 		try {
 			FileOutputStream fos;
 			fos = new FileOutputStream(this.caminho);
@@ -78,8 +76,7 @@ public class UploadArquivo {
 
 	}
 
-
-	private void Backup() {
+	public void back() {
 		FileOutputStream fos;
 		try {
 			fos = new FileOutputStream(this.caminhoBack);
@@ -88,7 +85,14 @@ public class UploadArquivo {
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
-
-
 	}
+
+	public String retornaFoto() {
+		if (this.caminho != null) {
+			return this.caminho;
+		} else {
+			return "/resources/fotos/foto.gif";
+		}
+	}
+
 }

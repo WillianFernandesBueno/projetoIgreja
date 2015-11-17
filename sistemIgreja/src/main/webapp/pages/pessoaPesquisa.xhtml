@@ -21,20 +21,35 @@
 					</h:panelGrid>
 				</f:facet>
 			</p:toolbar>
-			<br />
-			<p:dataTable emptyMessage="Nenhum registro encontrado.">
-				<f:facet name="header">
-            		Lista de Pessoas
-        		</f:facet>
-				<p:column headerText="Código">
+		</h:form>
+		<h:form>
+			<p:dataTable var="usuario" value="#{listaUsuarioMB.usuarios}" reflow="true" rows="15" paginator="true">
+				<p:column headerText="Id">
+					<h:outputText value="#{usuario.id}" />
 				</p:column>
-				<p:column headerText="Nome">
+
+				<p:column headerText="Nome" filterBy="#{usuario.nome}" >
+					<h:outputText value="#{usuario.nome}" />
 				</p:column>
+
+				<p:column headerText="Nascimento">
+					<h:outputText value="#{usuario.dataNascimento}" />
+				</p:column>
+
 				<p:column headerText="Sexo">
+					<h:outputText value="#{usuario.sexo}" />
 				</p:column>
-				<p:column headerText="Cargo">
+
+				<p:column headerText="RG">
+					<h:outputText value="#{usuario.rg}" />
 				</p:column>
-				<p:column headerText="Situação">
+
+				<p:column headerText="CPF">
+					<h:outputText value="#{usuario.cpf}" />
+				</p:column>
+
+				<p:column headerText="Telefone">
+					<h:outputText value="#{usuario.telefoneCelular}" />
 				</p:column>
 			</p:dataTable>
 		</h:form>

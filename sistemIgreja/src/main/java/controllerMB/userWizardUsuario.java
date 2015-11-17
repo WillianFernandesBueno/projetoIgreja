@@ -1,16 +1,12 @@
 package controllerMB;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
+import javax.faces.model.SelectItem;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
@@ -18,8 +14,10 @@ import org.primefaces.model.UploadedFile;
 
 import util.FacesUtil;
 import util.UploadArquivo;
-import util.Util;
-import DAO.UsuarioHIB;
+import DAO.IgrejaDAO;
+import DAO.UsuarioDAO;
+import DTO.UsuarioDTO;
+import bean.Igreja;
 import bean.Usuario;
 
 @ManagedBean
@@ -32,16 +30,59 @@ public class userWizardUsuario implements Serializable {
 	private boolean skip;
 	private UploadArquivo arquivo;
 	private UploadedFile file;
-
-
+	List<SelectItem> igrejaSelect;
+	List<Igreja> igrejas;
 
 	public userWizardUsuario() {
 		usuario = new Usuario();
-		/*
-		 * aqui vou ter que popular a lista de igrejas
-		 */
-		System.out.println("lista de igrejas");
 	}
+	
+	//fileUpload irá fazer o carregamento do arquivo e prepara-lo para ser gravado.
+	public void uploadAction (FileUploadEvent event){
+		arquivo = new UploadArquivo();
+		this.arquivo.fileUpload(event, ".jpg", DIRETORIO,DIRETORIOBACKUP);
+		usuario.setFoto(this.arquivo.getNome());
+		System.out.println(arquivo.getNome());
+		System.out.println(usuario.getFoto());
+		this.arquivo.gravar();
+	}
+
+	public void save() { 
+		new UsuarioDTO().inserir(usuario);
+		FacesUtil.addMsgInfo(usuario.getNome()+" cadastrado com sucesso");
+	}
+
+//	public boolean isSkip() {
+//		return skip;
+//	}
+//
+//	public void setSkip(boolean skip) {
+//		this.skip = skip;
+//	}
+
+//	public String onFlowProcess(FlowEvent event) {
+//		if(skip) {
+//			skip = false;   //reset in case user goes back
+//			return "confirm";
+//		}
+//		else {
+//			return event.getNewStep();
+//		}
+//	}
+
+	public String retornaFoto() {
+		if (this.usuario != null) {
+			if (this.usuario.getFoto() != null) {
+				System.out.println("/resources/fotos/" + this.usuario.getFoto());
+				return "/resources/fotos/" + this.usuario.getFoto();
+			} else {
+				return "/resources/fotos/foto.gif";
+			}
+		}
+		System.out.println("teste3");
+		return "/resources/fotos/foto.gif";
+	}
+
 	public UploadedFile getFile() {
 		return file;
 	}
@@ -65,52 +106,28 @@ public class userWizardUsuario implements Serializable {
 		this.arquivo = arquivo;
 	}
 
-	//fileUpload irá fazer o carregamento do arquivo e prepara-lo para ser gravado.
-	public void uploadAction (FileUploadEvent event){
-		arquivo = new UploadArquivo();
-		this.arquivo.fileUpload(event, ".jpg", DIRETORIO,DIRETORIOBACKUP);
-		usuario.setFoto(this.arquivo.getNome());
-		System.out.println(arquivo.getNome());
-		System.out.println(usuario.getFoto());
-		this.arquivo.gravar();
-		System.out.println("---------------------------");
-	}
-
-	public void save() { 
-		new UsuarioHIB().save(usuario);
-		FacesUtil.addMsgInfo(usuario.getNome()+" cadastrado com sucesso");
-	}
-
-	public boolean isSkip() {
-		return skip;
-	}
-
-	public void setSkip(boolean skip) {
-		this.skip = skip;
-	}
-
-	public String onFlowProcess(FlowEvent event) {
-		if(skip) {
-			skip = false;   //reset in case user goes back
-			return "confirm";
-		}
-		else {
-			return event.getNewStep();
-		}
-	}
-
-	public String retornaFoto() {
-		if (this.usuario != null) {
-			System.out.println("teste willian");
-			if (this.usuario.getFoto() != null) {
-				System.out.println("/resources/fotos/" + this.usuario.getFoto());
-				return "/resources/fotos/" + this.usuario.getFoto();
-			} else {
-				return "/resources/fotos/foto.gif";
+	public List<SelectItem> getIgrejaSelect() {
+		if(igrejaSelect == null){
+			IgrejaDAO igrejaDao = new IgrejaDAO();
+			igrejas = new ArrayList<Igreja>();
+			igrejaSelect = new ArrayList<SelectItem>();
+			igrejas = (ArrayList<Igreja>) igrejaDao.obterTodos();
+			if(igrejas != null && !igrejas.isEmpty()){
+				SelectItem item;
+				for (Igreja igreja : igrejas) {
+					item = new SelectItem(igreja, igreja.getNome());
+					igrejaSelect.add(item);
+				}	
 			}
 		}
-		System.out.println("teste3");
-		return "/resources/fotos/foto.gif";
+		return igrejaSelect;
 	}
 
+	public List<Igreja> getIgrejas() {
+		return igrejas;
+	}
+	public void setIgrejas(List<Igreja> igrejas) {
+		this.igrejas = igrejas;
+	}
+	
 }
