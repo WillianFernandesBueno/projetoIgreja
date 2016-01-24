@@ -5,7 +5,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import bean.Usuario;
+import entidades.Usuario;
 
 @FacesConverter(forClass = Usuario.class)
 public class UsuarioConverter implements Converter {

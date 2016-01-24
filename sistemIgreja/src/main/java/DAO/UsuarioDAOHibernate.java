@@ -12,10 +12,11 @@ import javax.persistence.Query;
 
 import org.hibernate.Session;
 
-import bean.Usuario;
+import entidades.Usuario;
 
 public class UsuarioDAOHibernate implements UsuarioDAO{
 	private EntityManager em;
+	
 	public UsuarioDAOHibernate() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("sistemaIgreja");  
 		em = factory.createEntityManager();
@@ -23,6 +24,7 @@ public class UsuarioDAOHibernate implements UsuarioDAO{
 	public void close() {
 		em.close();
 	}
+	
 	public void inserir(Usuario usuario) {	
 		em.getTransaction().begin(); // abre uma transação
 		try {
@@ -83,5 +85,19 @@ public class UsuarioDAOHibernate implements UsuarioDAO{
 //		return qry.getResultList();
 		Query qry = em.createQuery("from Usuario");
 		return qry.getResultList();
+	}
+	
+	@Override
+	public List<Usuario> buscar(String nome) {
+		Query qry = em.createQuery("select u from Usuario u where u.nome like :param1");
+		qry.setParameter("param1", "%"+nome+"%");
+		return qry.getResultList();
+
+	}
+	@Override
+	public Usuario buscar2(String id) {
+		Query qry = em.createQuery("select u from Usuario u where u.nome like :param1");
+		qry.setParameter("param1", "%"+id+"%");
+		return (Usuario) qry.getSingleResult();
 	}
 }

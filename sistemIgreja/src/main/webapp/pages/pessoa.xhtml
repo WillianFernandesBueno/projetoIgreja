@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/template/modeloGeral.xhtml">
+	<ui:define name="conteudo">
+		<h:form id="form">
+			<p:panel header="Gerenciar Usuarios" style="text-align: center">
+
+				<p:panelGrid columns="6">
+					<p:inputText id="txt" value="#{userMB.texto}" style="width:200px"
+						maxlength="32" placeholder="Pesquisar Por Nome">
+
+						<p:ajax event="keyup" update="dataTable"
+							listener="#{userMB.buscar()}" />
+					</p:inputText>
+				</p:panelGrid>
+
+
+				<p:dataTable id="dataTable" value="#{userMB.usuarios}" var="user"
+					rowKey="#{user.id}" emptyMessage="nenhum usuario" rows="5"
+					paginator="true" selection="#{userMB.usuarioSelecionado}"
+					selectionMode="single">
+
+
+					<p:column headerText="Id">
+						<h:outputText value="#{user.id}" />
+					</p:column>
+
+					<p:column headerText="Nome">
+						<h:outputText value="#{user.nome}" />
+					</p:column>
+
+					<p:column headerText="Nascimento">
+						<h:outputText value="#{user.dataNascimento}" />
+					</p:column>
+
+					<p:column headerText="email">
+						<h:outputText value="#{user.email}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<p:commandButton id="botaoCadastrar" value="Cadastrar"
+					action="/pages/pessoaCadastro.xhtml?faces-redirect=true"
+					icon="ui-icon-document" />
+
+				<p:commandButton value="Alterar" action="#{userMB.alterar()}"
+					icon="ui-icon-wrench" />
+
+				<p:commandButton value="Alterar 2" type="button"
+					onclick="PF('alterar').show();"
+					actionListener="#{userMB.alterar()}" update=":alterar" />
+
+				<p:commandButton value="Visualizar" action="#{userMB.alterar()}"
+					icon="ui-icon-wrench" />
+
+				<p:commandButton value="Deletar"
+					actionListener="#{userMB.excluir()}" update=":form:dataTable">
+					<p:confirm header="Confirmation" message="Você tem Certeza?"
+						icon="ui-icon-alert" />
+				</p:commandButton>
+
+			</p:panel>
+		</h:form>
+
+
+
+		<p:dialog widgetVar="alterar" id="alterar" header="Mensagem privada"
+			width="1200" height="500" modal="true" appendTo="@(body)"
+			resizable="false" closable="true" closeOnEscape="true">
+
+
+			<p:outputLabel value="Usuario:" for="usuario" />
+			<p:inputText value="#{userMB.usuario.nome}" maxlength="32"
+				required="true" id="usuario"
+				requiredMessage="preencha o campo usuario" />
+
+		</p:dialog>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+				update=":form:dataTable" />
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+
+
+
+	</ui:define>
+</ui:composition>
+</html>

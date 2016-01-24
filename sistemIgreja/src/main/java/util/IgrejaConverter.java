@@ -5,7 +5,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import bean.Igreja;
+import entidades.Igreja;
 
 @FacesConverter(forClass = Igreja.class)
 public class IgrejaConverter implements Converter {

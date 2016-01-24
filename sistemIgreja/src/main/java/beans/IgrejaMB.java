@@ -1,4 +1,4 @@
-package controllerMB;
+package beans;
 
 import java.io.Serializable;
 
@@ -7,9 +7,9 @@ import javax.faces.bean.ViewScoped;
 
 import org.primefaces.event.FlowEvent;
 
+import entidades.Igreja;
 import util.FacesUtil;
 import DAO.IgrejaDAO;
-import bean.Igreja;
 
 @ManagedBean
 @ViewScoped

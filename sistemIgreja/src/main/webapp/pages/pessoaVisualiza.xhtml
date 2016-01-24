@@ -9,20 +9,19 @@
 
 	<ui:define name="conteudo">
 		<h:form>
-			<p:wizard flowListener="#{userMB.onFlowProcess}"
+			<p:wizard flowListener="#{userListMB.onFlowProcess}"
 				backLabel="Voltar" nextLabel="Avançar">
 				<p:tab id="pessoal" title="Pessoal">
 					<p:panel header="Detalhes Pessoais">
 						<p:messages />
 						<div class="ui-fluid">
 							<p:panelGrid columns="2"
-								columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid" 
+								columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
 								styleClass="ui-panelgrid-blank;">
 
 								<p:outputLabel value="Nome*" />
-								<p:inputText value="#{userMB.usuario.nome}" required="false" 
+								<p:inputText value="#{userMB.usuario.nome}" required="false"
 									label="Nome" styleClass="ui-grid-col-4" />
-									
 
 								<p:outputLabel value="Nome da Mãe*" />
 								<p:inputText value="#{userMB.usuario.nomeMae}"

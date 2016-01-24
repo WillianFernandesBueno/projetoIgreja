@@ -1,4 +1,4 @@
-package controllerMB;
+package beans;
 
 import java.util.List;
 
@@ -6,12 +6,12 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import entidades.Usuario;
 import DTO.UsuarioDTO;
-import bean.Usuario;
 
 @ManagedBean
 @ViewScoped
-public class ListaUsuarioMB {
+public class IgrejaListMB {
 	private List<Usuario> usuarios;
 
 

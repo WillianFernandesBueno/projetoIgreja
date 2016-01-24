@@ -9,7 +9,7 @@
 
 	<ui:define name="conteudo">
 		<h:form>
-			<p:wizard flowListener="#{usuarioMB.onFlowProcess}"
+			<p:wizard flowListener="#{userMB.onFlowProcess}"
 				backLabel="Voltar" nextLabel="Avançar">
 				<p:tab id="pessoal" title="Pessoal">
 					<p:panel header="Detalhes Pessoais">
@@ -20,43 +20,43 @@
 								styleClass="ui-panelgrid-blank;">
 
 								<p:outputLabel value="Nome*" />
-								<p:inputText value="#{usuarioMB.usuario.nome}" required="true"
+								<p:inputText value="#{userMB.usuario.nome}" required="true"
 									label="Nome" styleClass="ui-grid-col-4" />
 
 								<p:outputLabel value="Nome da Mãe*" />
-								<p:inputText value="#{usuarioMB.usuario.nomeMae}"
-									required="true" label="Nome do Mãe" styleClass="ui-grid-col-4" />
+								<p:inputText value="#{userMB.usuario.nomeMae}"
+									required="false" label="Nome do Mãe" styleClass="ui-grid-col-4" />
 
 								<p:outputLabel value="Nome do Pai*" />
-								<p:inputText value="#{usuarioMB.usuario.nomePai}"
-									required="true" label="Nome da Pai" styleClass="ui-grid-col-4" />
+								<p:inputText value="#{userMB.usuario.nomePai}"
+									required="false" label="Nome da Pai" styleClass="ui-grid-col-4" />
 
 								<p:outputLabel value="CPF" />
-								<p:inputMask value="#{usuarioMB.usuario.cpf}"
+								<p:inputMask value="#{userMB.usuario.cpf}"
 									mask="999.999.999-99" styleClass="ui-grid-col-2"
 									required="false" converter="convertInput" label="CPF" />
 
 								<h:outputText value="RG" />
-								<p:inputText value="#{usuarioMB.usuario.rg}" label="RG"
+								<p:inputText value="#{userMB.usuario.rg}" label="RG"
 									styleClass="ui-grid-col-2" required="false" lang="RG" />
 
 
 								<p:outputLabel value="Nascimento: " />
-								<p:calendar value="#{usuarioMB.usuario.dataNascimento}"
-									pattern="dd-MM-yyyy" mask="true" locale="pt" required="true"
+								<p:calendar value="#{userMB.usuario.dataNascimento}"
+									pattern="dd-MM-yyyy" mask="true" locale="pt" required="false"
 									label="Data Nascimento" />
 
 
 								<p:outputLabel value="Date Batismo: " />
-								<p:calendar value="#{usuarioMB.usuario.dataBatismo}"
+								<p:calendar value="#{userMB.usuario.dataBatismo}"
 									pattern="dd-MM-yyyy" mask="true" locale="pt" required="false"
 									label="Data Batismo" />
 
 
 								<h:outputText value="Situação" />
 								<p:selectOneMenu id="situacao"
-									value="#{usuarioMB.usuario.situacao}"
-									styleClass="ui-grid-col-2" required="true" editable="false"
+									value="#{userMB.usuario.situacao}"
+									styleClass="ui-grid-col-2" required="false" editable="false"
 									label="Situação">
 									<f:selectItem itemLabel="Em Comunhão" itemValue="emComunhao" />
 									<f:selectItem itemLabel="Fora da Comunhão"
@@ -65,15 +65,15 @@
 								</p:selectOneMenu>
 
 								<h:outputLabel value="Igreja" />
-								<h:selectOneMenu value="#{usuarioMB.usuario.igreja}">
+								<h:selectOneMenu value="#{userMB.usuario.igreja}">
 									<f:selectItem itemValue="null" itemLabel="Sel. classe" />
-									<f:selectItems value="#{usuarioMB.igrejas}" var="cl"
+									<f:selectItems value="#{userMB.igrejas}" var="cl"
 										itemValue="#{cl}" itemLabel="#{cl.nome}" />
 								</h:selectOneMenu>
 
 								<h:outputText value="Cargo" />
-								<p:selectOneMenu id="cargo" value="#{usuarioMB.usuario.cargo}"
-									styleClass="ui-grid-col-2" required="true" editable="false"
+								<p:selectOneMenu id="cargo" value="#{userMB.usuario.cargo}"
+									styleClass="ui-grid-col-2" required="false" editable="false"
 									label="Cargo">
 									<f:selectItem itemLabel="Visitante" itemValue="visitante" />
 									<f:selectItem itemLabel="Novo Convertido"
@@ -90,8 +90,8 @@
 
 								<h:outputText value="Estado Civil" />
 								<p:selectOneMenu id="estadoCivil"
-									value="#{usuarioMB.usuario.estadoCivil}"
-									styleClass="ui-grid-col-2" required="true" label="Estado Civil"
+									value="#{userMB.usuario.estadoCivil}"
+									styleClass="ui-grid-col-2" required="false" label="Estado Civil"
 									editable="false">
 									<f:selectItem itemLabel="Solteiro" itemValue="solteiro" />
 									<f:selectItem itemLabel="Casado" itemValue="casado" />
@@ -100,8 +100,8 @@
 								</p:selectOneMenu>
 
 								<h:outputText value="Sexo" />
-								<p:selectOneMenu id="sexo" value="#{usuarioMB.usuario.sexo}"
-									styleClass="ui-grid-col-2" required="true" label="Sexo"
+								<p:selectOneMenu id="sexo" value="#{userMB.usuario.sexo}"
+									styleClass="ui-grid-col-2" required="false" label="Sexo"
 									editable="false">
 									<f:selectItem itemLabel="Masculino" itemValue="masculino" />
 									<f:selectItem itemLabel="Ferminino" itemValue="feminino" />
@@ -109,7 +109,7 @@
 
 
 								<h:outputText value="Dirigente" />
-								<p:selectBooleanCheckbox value="#{usuarioMB.usuario.dirigente}" />
+								<p:selectBooleanCheckbox value="#{userMB.usuario.dirigente}" />
 
 							</p:panelGrid>
 
@@ -124,20 +124,20 @@
 							styleClass="ui-panelgrid-blank;">
 
 							<h:outputText value="Endereço: " />
-							<p:inputText value="#{usuarioMB.usuario.endereco}"
+							<p:inputText value="#{userMB.usuario.endereco}"
 								styleClass="ui-grid-col-4" />
 
 							<h:outputText value="Bairro: " />
-							<p:inputText value="#{usuarioMB.usuario.bairro}"
+							<p:inputText value="#{userMB.usuario.bairro}"
 								styleClass="ui-grid-col-4" />
 
 							<h:outputText value="Complemento: " />
-							<p:inputText value="#{usuarioMB.usuario.complemento}"
+							<p:inputText value="#{userMB.usuario.complemento}"
 								styleClass="ui-grid-col-4" />
 
 							<h:outputText value="Estado " />
-							<p:selectOneMenu id="Estado" value="#{usuarioMB.usuario.estado}"
-								required="true" label="Estado" editable="false">
+							<p:selectOneMenu id="Estado" value="#{userMB.usuario.estado}"
+								required="false" label="Estado" editable="false">
 								<f:selectItem itemLabel="Acre" itemValue="Acre" />
 								<f:selectItem itemLabel="Alagoas" itemValue="Alagoas" />
 								<f:selectItem itemLabel="Amapá" itemValue="Amapá" />
@@ -175,16 +175,16 @@
 							</p:selectOneMenu>
 
 							<h:outputText value="Numero: " />
-							<p:inputText value="#{usuarioMB.usuario.numero}"
+							<p:inputText value="#{userMB.usuario.numero}"
 								styleClass="ui-grid-col-1" />
 
 							<h:outputText value="Cidade: " />
-							<p:inputText value="#{usuarioMB.usuario.cidade}" required="true"
+							<p:inputText value="#{userMB.usuario.cidade}" required="false"
 								styleClass="ui-grid-col-1" label="Cidade" />
 
 							<h:outputText value="CEP: " />
-							<p:inputMask value="#{usuarioMB.usuario.cep}" mask="99999-999"
-								styleClass="ui-grid-col-2" required="true"
+							<p:inputMask value="#{userMB.usuario.cep}" mask="99999-999"
+								styleClass="ui-grid-col-2" required="false"
 								converter="convertInput" label="CEP" />
 
 						</p:panelGrid>
@@ -199,21 +199,21 @@
 							styleClass="ui-panelgrid-blank;">
 
 							<h:outputText value="Email:" />
-							<p:inputText value="#{usuarioMB.usuario.email}" required="false"
+							<p:inputText value="#{userMB.usuario.email}" required="false"
 								label="Email" styleClass="ui-grid-col-4" />
 
 							<h:outputText value="Telefone Fixo: " />
-							<p:inputMask value="#{usuarioMB.usuario.telefoneFixo}"
+							<p:inputMask value="#{userMB.usuario.telefoneFixo}"
 								mask="(99)9999-9999" styleClass="ui-grid-col-2" required="false"
 								converter="convertInput" label="Telefone Fixo" />
 
 							<h:outputText value="Celular: " />
-							<p:inputMask value="#{usuarioMB.usuario.telefoneCelular}"
+							<p:inputMask value="#{userMB.usuario.telefoneCelular}"
 								mask="(99)9999-9999" styleClass="ui-grid-col-2" required="false"
 								converter="convertInput" label="Telefone Celular" />
 
 							<h:outputText value="Observação: " />
-							<p:inputText value="#{usuarioMB.usuario.observacao}"
+							<p:inputText value="#{userMB.usuario.observacao}"
 								required="false" label="Nome" styleClass="ui-grid-col-4" />
 
 						</p:panelGrid>
@@ -241,105 +241,105 @@
 						<p:panelGrid columns="1" ColumnClasses="ui-grid-col-12"
 							layout="grid" styleClass="ui-panelgrid-blank;">
 							<p:graphicImage height="150" width="150"
-								url="#{usuarioMB.retornaFoto()}" />
+								url="#{userMB.retornaFoto()}" />
 						</p:panelGrid>
 						<p:panelGrid columns="4"
 							ColumnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
 							layout="grid" styleClass="ui-panelgrid-blank;">
 
 							<p:outputLabel value="Nome" />
-							<p:inputText value="#{usuarioMB.usuario.nome}" required="false"
+							<p:inputText value="#{userMB.usuario.nome}" required="false"
 								disabled="true" />
 
 							<p:outputLabel value="Nome da Mãe" />
-							<p:inputText value="#{usuarioMB.usuario.nomeMae}"
+							<p:inputText value="#{userMB.usuario.nomeMae}"
 								required="false" disabled="true" />
 
 							<p:outputLabel value="Nome do Pai" />
-							<p:inputText value="#{usuarioMB.usuario.nomePai}"
+							<p:inputText value="#{userMB.usuario.nomePai}"
 								required="false" disabled="true" />
 
 							<p:outputLabel value="CPF" />
-							<p:inputText value="#{usuarioMB.usuario.cpf}" required="false"
+							<p:inputText value="#{userMB.usuario.cpf}" required="false"
 								disabled="true" />
 
 							<p:outputLabel value="RG" />
-							<p:inputText value="#{usuarioMB.usuario.rg}" required="false"
+							<p:inputText value="#{userMB.usuario.rg}" required="false"
 								disabled="true" />
 
 							<p:outputLabel value="Data Nascimento" />
-							<p:inputText value="#{usuarioMB.usuario.dataNascimento}"
+							<p:inputText value="#{userMB.usuario.dataNascimento}"
 								required="false" disabled="true" />
 
 							<p:outputLabel value="Data Batismo" />
-							<p:inputText value="#{usuarioMB.usuario.dataBatismo}"
+							<p:inputText value="#{userMB.usuario.dataBatismo}"
 								required="false" disabled="true" />
 
 							<p:outputLabel value="Situaçaõ" />
-							<p:inputText value="#{usuarioMB.usuario.situacao}"
+							<p:inputText value="#{userMB.usuario.situacao}"
 								required="false" disabled="true" />
 
 							<p:outputLabel value="Cargo" />
-							<p:inputText value="#{usuarioMB.usuario.cargo}" required="false"
+							<p:inputText value="#{userMB.usuario.cargo}" required="false"
 								disabled="true" />
 
 							<p:outputLabel value="Estado Civil" />
-							<p:inputText value="#{usuarioMB.usuario.estadoCivil}"
+							<p:inputText value="#{userMB.usuario.estadoCivil}"
 								required="false" disabled="true" />
 
 							<p:outputLabel value="Sexo" />
-							<p:inputText value="#{usuarioMB.usuario.sexo}" required="false"
+							<p:inputText value="#{userMB.usuario.sexo}" required="false"
 								disabled="true" />
 
 							<p:outputLabel value="Dirigente" />
-							<p:inputText value="#{usuarioMB.usuario.dirigente}"
+							<p:inputText value="#{userMB.usuario.dirigente}"
 								required="false" disabled="true" />
 
 							<p:outputLabel value="Endereço" />
-							<p:inputText value="#{usuarioMB.usuario.endereco}"
+							<p:inputText value="#{userMB.usuario.endereco}"
 								required="false" disabled="true" />
 
 							<p:outputLabel value="Bairro" />
-							<p:inputText value="#{usuarioMB.usuario.bairro}" required="false"
+							<p:inputText value="#{userMB.usuario.bairro}" required="false"
 								disabled="true" />
 
 							<p:outputLabel value="Complemento" />
-							<p:inputText value="#{usuarioMB.usuario.complemento}"
+							<p:inputText value="#{userMB.usuario.complemento}"
 								required="false" disabled="true" />
 
 							<p:outputLabel value="Numero" />
-							<p:inputText value="#{usuarioMB.usuario.numero}" required="false"
+							<p:inputText value="#{userMB.usuario.numero}" required="false"
 								disabled="true" />
 
 							<p:outputLabel value="Cidade" />
-							<p:inputText value="#{usuarioMB.usuario.cidade}" required="false"
+							<p:inputText value="#{userMB.usuario.cidade}" required="false"
 								disabled="true" />
 
 							<p:outputLabel value="CEP" />
-							<p:inputText value="#{usuarioMB.usuario.cep}" required="false"
+							<p:inputText value="#{userMB.usuario.cep}" required="false"
 								disabled="true" />
 
 							<p:outputLabel value="E-mail" />
-							<p:inputText value="#{usuarioMB.usuario.email}" required="false"
+							<p:inputText value="#{userMB.usuario.email}" required="false"
 								disabled="true" />
 
 							<p:outputLabel value="Telefone Fixo" />
-							<p:inputText value="#{usuarioMB.usuario.telefoneFixo}"
+							<p:inputText value="#{userMB.usuario.telefoneFixo}"
 								required="false" disabled="true" />
 
 							<p:outputLabel value="Telefone Celular" />
-							<p:inputText value="#{usuarioMB.usuario.telefoneCelular}"
+							<p:inputText value="#{userMB.usuario.telefoneCelular}"
 								required="false" disabled="true" />
 
 							<p:outputLabel value="Observação" />
-							<p:inputText value="#{usuarioMB.usuario.observacao}"
+							<p:inputText value="#{userMB.usuario.observacao}"
 								required="false" disabled="true" />
 
 						</p:panelGrid>
 						<p:toolbar>
 							<f:facet name="right">
 								<p:commandButton value="Salvar"
-									actionListener="#{usuarioMB.save}" update=":msgGlobal"
+									actionListener="#{userMB.save}" update=":msgGlobal"
 									process="@this" label="Salvar" />
 							</f:facet>
 						</p:toolbar>
@@ -354,7 +354,7 @@
 			widgetVar="dlgfoto" resizable="false" modal="true" appendTo="@(body)"
 			closable="true" draggable="false" closeOnEscid="modal">
 			<h:form>
-				<p:fileUpload fileUploadListener="#{usuarioMB.uploadAction}"
+				<p:fileUpload fileUploadListener="#{userMB.uploadAction}"
 					mode="advanced" label="Buscar" cancelLabel="Cancelar"
 					uploadLabel="Processar Imagem" fileLimit="10000" update="messages" />
 				<p:growl id="messages" showDetail="true" />

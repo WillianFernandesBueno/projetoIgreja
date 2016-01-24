@@ -1,11 +1,9 @@
-package bean;
+package entidades;
 
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

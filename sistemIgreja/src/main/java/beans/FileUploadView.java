@@ -1,4 +1,4 @@
-package controllerMB;
+package beans;
 
 
 import javax.faces.application.FacesMessage;
