@@ -63,6 +63,7 @@ public class UploadArquivo {
 
 	//grava o arquivo no diretório informado.
 	public void gravar(){
+		System.out.println(this.nome+" || "+this.caminho+" || "+this.caminhoBack+" || "+this.arquivo);
 		//realizar backup das imagens em uma pasta fora do servidor de aplicação
 		try {
 			FileOutputStream fos;

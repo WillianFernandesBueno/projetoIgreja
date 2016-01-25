@@ -44,6 +44,7 @@
 						<h:outputText value="#{user.email}" />
 					</p:column>
 
+
 				</p:dataTable>
 
 				<div align="center">
@@ -56,8 +57,19 @@
 							onclick="PF('dlgcadastrar').show();" />
 
 						<p:commandButton value="Alterar"
-							actionListener="#{usuarioBean.inserir()}" update=":cadastrar"
+							actionListener="#{usuarioBean.alterar()}" update=":cadastrar"
 							onclick="PF('dlgcadastrar').show();" />
+
+						<p:commandButton value="Visualizar"
+							actionListener="#{usuarioBean.alterar()}" update="visualizar"
+							onclick="PF('dlgvisualizar').show();" />
+
+						<p:commandButton value="Deletar"
+							actionListener="#{usuarioBean.excluir()}"
+							update=":usuario:dataTable">
+							<p:confirm header="Confirmation" message="Você tem Certeza?"
+								icon="ui-icon-alert" />
+						</p:commandButton>
 
 					</p:panelGrid>
 				</div>
@@ -65,6 +77,48 @@
 		</h:form>
 
 		<!-- ==================================================================================================================================================================== -->
+
+		<p:dialog modal="true" appendTo="@(body)" widgetVar="dlgvisualizar"
+			resizable="false" closable="true" closeOnEscape="true" width="1500"
+			height="800">
+			<h:form id="visualizar">
+				<p:panel header="Detalhes Pessoais">
+					<p:messages closable="true" autoUpdate="true" />
+					<div class="ui-fluid">
+						<p:panelGrid columns="4"
+							columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
+							styleClass="ui-panelgrid-blank;">
+
+							<p:outputLabel value="Nome: " />
+							<p:outputLabel value="#{usuarioBean.usuario.nome}" />
+						</p:panelGrid>
+
+					</div>
+				</p:panel>
+
+
+
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton value="salvar"
+							actionListener="#{usuarioBean.salvar()}" update="@form" />
+					</f:facet>
+				</p:toolbar>
+			</h:form>
+		</p:dialog>
+
+
+
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+				update=":form:dataTable" />
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+
+
 		<p:dialog modal="true" appendTo="@(body)" widgetVar="dlgcadastrar"
 			resizable="false" closable="true" closeOnEscape="true" width="1500"
 			height="800">
@@ -282,8 +336,18 @@
 					<p:panelGrid columns="2"
 						columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
 						styleClass="ui-panelgrid-blank;">
-						<p:commandButton value="Buscar Imagem"
-							onclick="PF('dlgfoto').show();" />
+
+						 <p:graphicImage height="100"
+                                            id="pic"
+                                            url="#{usuarioBean.retornaFoto()}"/>   
+
+						 <p:commandButton onclick="PF('dlgfoto').show();"
+                                             update=":foto"
+                                             id="foto"
+                                             immediate="true"
+                                             value="foto"
+                                             style="width: 100px"
+                                             />
 					</p:panelGrid>
 
 				</p:panel>
@@ -302,11 +366,25 @@
 		<p:dialog header="Enviar foto" width="60%" height="350"
 			widgetVar="dlgfoto" resizable="false" modal="true" appendTo="@(body)"
 			closable="true" draggable="false" closeOnEscid="modal">
-			<h:form>
-				<p:fileUpload fileUploadListener="#{userMB.uploadAction}"
-					mode="advanced" label="Buscar" cancelLabel="Cancelar"
-					uploadLabel="Processar Imagem" fileLimit="10000" update="messages" />
-				<p:growl id="messages" showDetail="true" />
+			<h:form id="foto" enctype="multipart/form-data">
+				         <p:fileUpload id="upload" 
+                                      mode="advanced" 
+                                      required="true"                                        
+                                      cancelLabel="Cancelar"
+                                      style="margin-top: 15px;"
+                                      requiredMessage="Selecione  uma foto!"
+                                      allowTypes="/(\.|\/)(gif|jpe?g|png|jpg)$/"
+                                      invalidFileMessage="Tipo de arquivo nao permitido" 
+                                      invalidSizeMessage="Tamanho excedido(100kb)" 
+                                      uploadLabel="Processar foto"
+                                      fileLimit="1"
+                                      fileLimitMessage="Apenas uma foto por vez"
+                                      fileUploadListener="#{usuarioBean.uploadAction}"
+                                      dragDropSupport="true"
+                                      label="Selecionar foto..." 
+                                      multiple="false"
+                                      update="@form"
+                                      oncomplete="PF('statusDialog').hide();removerDesabilitados();"/>                  
 			</h:form>
 		</p:dialog>
 	</ui:define>
