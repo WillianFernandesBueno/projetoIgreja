@@ -85,6 +85,7 @@ public class UsuarioBean implements Serializable {
 	}
 	public void alterar() {
 		this.usuario = getUsuarioSelecionado();
+		arquivo = new UploadArquivo();
 		this.igreja = new Igreja();
 		this.igrejas = new ArrayList<Igreja>(new IgrejaDAO().obterTodos());
 	}
@@ -106,25 +107,24 @@ public class UsuarioBean implements Serializable {
 		usuario.setFoto(this.arquivo.getNome());
 		this.arquivo.gravar();
 		Util.criarAviso("Foto processada!");
-        Util.executarJavaScript("PF('dlgfoto').hide();");
-        Util.atualizarForm("cadastrar:pic");
-		
+		Util.executarJavaScript("PF('dlgfoto').hide();");
+		Util.atualizarForm("cadastrar:pic");
+
 	}
 
 	// metodo responsavel por apresentar foto na confirmação do cadastro do
 	// usuario
 	public String retornaFoto() {
-		 if (this.usuario != null) {
-	            if (this.usuario.getFoto() != null) {
-	            	System.out.println("TESTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-	                return "/resources/fotos/" + this.usuario.getFoto();
-	            } else {
-	                return "/resources/fotos/foto.gif";
-	            }
-	        }
-	        return "/resources/fotos/foto.gif";
+		if (this.usuario != null) {
+			if (this.usuario.getFoto() != null) {
+				return "/resources/fotos/" + this.usuario.getFoto();
+			} else {
+				return "/resources/fotos/foto.jpg";
+			}
+		}
+		return "/resources/fotos/foto.jpg";
 	}
-	 
+
 
 	public UploadArquivo getArquivo() {
 		return arquivo;

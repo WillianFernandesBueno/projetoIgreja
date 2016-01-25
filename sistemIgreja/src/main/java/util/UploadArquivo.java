@@ -56,6 +56,8 @@ public class UploadArquivo {
 			this.arquivo = event.getFile().getContents();
 			File file = new File(getRealPath() + diretorio);
 			file.mkdirs();
+			System.out.println("CAMINHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+			System.out.println(caminho);
 		} catch (Exception ex) {
 			System.out.println("Erro no upload do arquivo" + ex);
 		}

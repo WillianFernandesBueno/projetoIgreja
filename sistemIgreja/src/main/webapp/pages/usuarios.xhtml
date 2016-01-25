@@ -79,29 +79,122 @@
 		<!-- ==================================================================================================================================================================== -->
 
 		<p:dialog modal="true" appendTo="@(body)" widgetVar="dlgvisualizar"
-			resizable="false" closable="true" closeOnEscape="true" width="1500"
-			height="800">
+			resizable="false" closable="true" closeOnEscape="true" width="1100"
+			height="500">
 			<h:form id="visualizar">
 				<p:panel header="Detalhes Pessoais">
-					<p:messages closable="true" autoUpdate="true" />
-					<div class="ui-fluid">
-						<p:panelGrid columns="4"
+					<p:panelGrid columns="2"
+						columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
+						styleClass="ui-panelgrid-blank;">
+
+							<p:graphicImage id="pic"
+								url="#{usuarioBean.retornaFoto()}"  height="170" width="165"/>
+
+						<p:panelGrid columns="2"
 							columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
 							styleClass="ui-panelgrid-blank;">
 
-							<p:outputLabel value="Nome: " />
-							<p:outputLabel value="#{usuarioBean.usuario.nome}" />
+
+
+							<p:outputLabel value="Nome*" />
+							<p:inputText value="#{usuarioBean.usuario.nome}" disabled="true"
+								label="Nome" styleClass="ui-grid-col-4" id="nome" />
+
+							<p:outputLabel value="Nome da Mãe*" />
+							<p:inputText value="#{usuarioBean.usuario.nomeMae}"
+								disabled="true" label="Nome do Mãe" styleClass="ui-grid-col-4" />
+
+							<p:outputLabel value="Nome do Pai*" />
+							<p:inputText value="#{usuarioBean.usuario.nomePai}"
+								disabled="true" label="Nome da Pai" styleClass="ui-grid-col-4" />
+
+							<p:outputLabel value="CPF" />
+							<p:inputMask value="#{usuarioBean.usuario.cpf}"
+								mask="999.999.999-99" styleClass="ui-grid-col-2"
+								disabled="true" converter="convertInput" label="CPF" />
+
+							<h:outputText value="RG" />
+							<p:inputText value="#{usuarioBean.usuario.rg}" label="RG"
+								styleClass="ui-grid-col-2" disabled="true" lang="RG" />
+
+
+							<p:outputLabel value="Nascimento: " />
+							<p:calendar value="#{usuarioBean.usuario.dataNascimento}"
+								pattern="dd-MM-yyyy" mask="true" locale="pt" disabled="true"
+								label="Data Nascimento" />
+
+
+							<p:outputLabel value="Date Batismo: " />
+							<p:calendar value="#{usuarioBean.usuario.dataBatismo}"
+								pattern="dd-MM-yyyy" mask="true" locale="pt" disabled="true"
+								label="Data Batismo" />
+
+
+							<h:outputText value="Situação" />
+							<p:selectOneMenu id="situacao"
+								value="#{usuarioBean.usuario.situacao}"
+								styleClass="ui-grid-col-2" disabled="true" editable="false"
+								label="Situação">
+								<f:selectItem itemLabel="Em Comunhão" itemValue="emComunhao" />
+								<f:selectItem itemLabel="Fora da Comunhão"
+									itemValue="foraComunhao" />
+								<f:selectItem itemLabel="Não Membro" itemValue="emComunhao" />
+							</p:selectOneMenu>
+
+							<h:outputLabel value="Igreja" />
+							<h:selectOneMenu value="#{usuarioBean.usuario.igreja}" disabled="true">
+								<f:selectItem itemValue="null" itemLabel="Sel. Igreja" />
+								<f:selectItems value="#{usuarioBean.igrejas}" var="cl"
+									itemValue="#{cl}" itemLabel="#{cl.nome}" />
+							</h:selectOneMenu>
+
+							<h:outputText value="Cargo" />
+							<p:selectOneMenu id="cargo" value="#{usuarioBean.usuario.cargo}"
+								styleClass="ui-grid-col-2" disabled="true" editable="false"
+								label="Cargo">
+								<f:selectItem itemLabel="Visitante" itemValue="visitante" />
+								<f:selectItem itemLabel="Novo Convertido"
+									itemValue="novoConvertido" />
+								<f:selectItem itemLabel="Membro" itemValue="membro" />
+								<f:selectItem itemLabel="Obreiro" itemValue="obreiro" />
+								<f:selectItem itemLabel="Diácono" itemValue="diacono" />
+								<f:selectItem itemLabel="Evangelista" itemValue="evangelista" />
+								<f:selectItem itemLabel="Presbítero" itemValue="presbitero" />
+								<f:selectItem itemLabel="Pastor" itemValue="pastor" />
+								<f:selectItem itemLabel="Missionário" itemValue="missionario" />
+							</p:selectOneMenu>
+
+
+							<h:outputText value="Estado Civil" />
+							<p:selectOneMenu id="estadoCivil"
+								value="#{usuarioBean.usuario.estadoCivil}"
+								styleClass="ui-grid-col-2" disabled="true" label="Estado Civil"
+								editable="false">
+								<f:selectItem itemLabel="Solteiro" itemValue="solteiro" />
+								<f:selectItem itemLabel="Casado" itemValue="casado" />
+								<f:selectItem itemLabel="Divorciado" itemValue="divorciado" />
+								<f:selectItem itemLabel="Viuvo" itemValue="viuvo" />
+							</p:selectOneMenu>
+
+							<h:outputText value="Sexo" />
+							<p:selectOneMenu id="sexo" value="#{usuarioBean.usuario.sexo}"
+								styleClass="ui-grid-col-2" disabled="true" label="Sexo"
+								editable="false">
+								<f:selectItem itemLabel="Masculino" itemValue="masculino" />
+								<f:selectItem itemLabel="Ferminino" itemValue="feminino" />
+							</p:selectOneMenu>
+
+
+							<h:outputText value="Dirigente" />
+							<p:selectBooleanCheckbox value="#{usuarioBean.usuario.dirigente}" disabled="true"/>
+
 						</p:panelGrid>
-
-					</div>
+					</p:panelGrid>
 				</p:panel>
-
-
 
 				<p:toolbar>
 					<f:facet name="right">
-						<p:commandButton value="salvar"
-							actionListener="#{usuarioBean.salvar()}" update="@form" />
+						<p:commandButton value="Confirmar" onclick="PF('dlgvisualizar').hide();" update="@form" />
 					</f:facet>
 				</p:toolbar>
 			</h:form>
@@ -120,8 +213,8 @@
 
 
 		<p:dialog modal="true" appendTo="@(body)" widgetVar="dlgcadastrar"
-			resizable="false" closable="true" closeOnEscape="true" width="1500"
-			height="800">
+			resizable="false" closable="true" closeOnEscape="true" width="1200"
+			height="550">
 
 			<h:form id="cadastrar">
 
@@ -129,9 +222,22 @@
 				<p:panel header="Detalhes Pessoais">
 					<p:messages closable="true" autoUpdate="true" />
 					<div class="ui-fluid">
+
+						<p:panelGrid columns="1"
+							columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
+							styleClass="ui-panelgrid-blank;">
+
+							<p:graphicImage height="100" id="pic"
+								url="#{usuarioBean.retornaFoto()}" style="width: 110px" />
+
+							<p:commandButton onclick="PF('dlgfoto').show();" update=":foto"
+								id="foto" immediate="true" value="Carregar" style="width: 110px" />
+						</p:panelGrid>
 						<p:panelGrid columns="2"
 							columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
 							styleClass="ui-panelgrid-blank;">
+
+
 
 							<p:outputLabel value="Nome*" />
 							<p:inputText value="#{usuarioBean.usuario.nome}" required="true"
@@ -180,7 +286,7 @@
 
 							<h:outputLabel value="Igreja" />
 							<h:selectOneMenu value="#{usuarioBean.usuario.igreja}">
-								<f:selectItem itemValue="null" itemLabel="Sel. classe" />
+								<f:selectItem itemValue="null" itemLabel="Sel. classe"/>
 								<f:selectItems value="#{usuarioBean.igrejas}" var="cl"
 									itemValue="#{cl}" itemLabel="#{cl.nome}" />
 							</h:selectOneMenu>
@@ -331,26 +437,6 @@
 					</p:panelGrid>
 				</p:panel>
 
-				<p:panel header="Foto do Usuario">
-					<p:messages />
-					<p:panelGrid columns="2"
-						columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
-						styleClass="ui-panelgrid-blank;">
-
-						 <p:graphicImage height="100"
-                                            id="pic"
-                                            url="#{usuarioBean.retornaFoto()}"/>   
-
-						 <p:commandButton onclick="PF('dlgfoto').show();"
-                                             update=":foto"
-                                             id="foto"
-                                             immediate="true"
-                                             value="foto"
-                                             style="width: 100px"
-                                             />
-					</p:panelGrid>
-
-				</p:panel>
 
 				<p:toolbar>
 					<f:facet name="right">
@@ -367,24 +453,18 @@
 			widgetVar="dlgfoto" resizable="false" modal="true" appendTo="@(body)"
 			closable="true" draggable="false" closeOnEscid="modal">
 			<h:form id="foto" enctype="multipart/form-data">
-				         <p:fileUpload id="upload" 
-                                      mode="advanced" 
-                                      required="true"                                        
-                                      cancelLabel="Cancelar"
-                                      style="margin-top: 15px;"
-                                      requiredMessage="Selecione  uma foto!"
-                                      allowTypes="/(\.|\/)(gif|jpe?g|png|jpg)$/"
-                                      invalidFileMessage="Tipo de arquivo nao permitido" 
-                                      invalidSizeMessage="Tamanho excedido(100kb)" 
-                                      uploadLabel="Processar foto"
-                                      fileLimit="1"
-                                      fileLimitMessage="Apenas uma foto por vez"
-                                      fileUploadListener="#{usuarioBean.uploadAction}"
-                                      dragDropSupport="true"
-                                      label="Selecionar foto..." 
-                                      multiple="false"
-                                      update="@form"
-                                      oncomplete="PF('statusDialog').hide();removerDesabilitados();"/>                  
+				<p:fileUpload id="upload" mode="advanced" required="true"
+					cancelLabel="Cancelar" style="margin-top: 15px;"
+					requiredMessage="Selecione  uma foto!"
+					allowTypes="/(\.|\/)(gif|jpe?g|png|jpg)$/"
+					invalidFileMessage="Tipo de arquivo nao permitido"
+					invalidSizeMessage="Tamanho excedido(100kb)"
+					uploadLabel="Processar foto" fileLimit="1"
+					fileLimitMessage="Apenas uma foto por vez"
+					fileUploadListener="#{usuarioBean.uploadAction}"
+					dragDropSupport="true" label="Selecionar foto..." multiple="false"
+					update="@form"
+					oncomplete="PF('statusDialog').hide();removerDesabilitados();" />
 			</h:form>
 		</p:dialog>
 	</ui:define>
