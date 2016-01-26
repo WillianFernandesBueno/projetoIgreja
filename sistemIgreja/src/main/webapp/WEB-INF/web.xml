@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1">
 	<welcome-file-list>
-		<welcome-file>pages/index.xhtml</welcome-file>
+		<welcome-file>pages/login.xhtml</welcome-file>
 	</welcome-file-list>
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
@@ -19,7 +19,11 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
-	
+	 <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
 	
 	<filter>
 		<filter-name>primeUploadFilter</filter-name>

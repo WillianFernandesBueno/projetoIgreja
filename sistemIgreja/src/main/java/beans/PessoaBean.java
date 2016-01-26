@@ -6,15 +6,10 @@
 package beans;
 
 import DAO.IgrejaDAO;
-import DTO.UsuarioDTO;
+import DTO.PessoaDTO;
 import entidades.Igreja;
-import entidades.Usuario;
+import entidades.Pessoa;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +17,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
 
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.FlowEvent;
 
 import util.UploadArquivo;
 import util.Util;
@@ -37,15 +29,15 @@ import util.Util;
  */
 @ManagedBean
 @ViewScoped
-public class UsuarioBean implements Serializable {
+public class PessoaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final String DIRETORIO = "/resources/fotos/";
 	private static final String DIRETORIOBACKUP = "C:/Users/Willian Bueno/Projetos/imagens/";
 	private UploadArquivo arquivo;
-	private Usuario usuario;
-	private Usuario usuarioSelecionado;
-	private List<Usuario> usuarios;
+	private Pessoa pessoa;
+	private Pessoa pessoaSelecionado;
+	private List<Pessoa> pessoas;
 	private boolean ver;
 	private String texto;
 	private List<Igreja> igrejas;
@@ -59,17 +51,17 @@ public class UsuarioBean implements Serializable {
 
 
 	public void buscar() {
-		usuarios = new UsuarioDTO().buscar(getTexto());
+		pessoas = new PessoaDTO().buscar(getTexto());
 	}
 
 	private void listar() {
-		this.usuarioSelecionado = new Usuario();
-		setUsuarios(new UsuarioDTO().obterTodos());
+		this.pessoaSelecionado = new Pessoa();
+		setPessoas(new PessoaDTO().obterTodos());
 	}
 
 	public void salvar() {
 		this.arquivo.back();
-		new UsuarioDTO().inserir(getUsuario());
+		new PessoaDTO().inserir(getPessoa());
 		listar();
 		Util.atualizarForm("usuario");
 		Util.executarJavaScript("PF('dlgcadastrar').hide();");
@@ -77,21 +69,21 @@ public class UsuarioBean implements Serializable {
 	}
 
 	public void inserir() {
-		this.usuario = new Usuario();
+		this.pessoa = new Pessoa();
 		arquivo = new UploadArquivo();
 		this.igreja = new Igreja();
 		this.igrejas = new ArrayList<Igreja>(new IgrejaDAO().obterTodos());
 		this.foto = retornaFoto();
 	}
 	public void alterar() {
-		this.usuario = getUsuarioSelecionado();
+		this.pessoa = getPessoaSelecionado();
 		arquivo = new UploadArquivo();
 		this.igreja = new Igreja();
 		this.igrejas = new ArrayList<Igreja>(new IgrejaDAO().obterTodos());
 	}
 
 	public void excluir() {
-		new UsuarioDTO().excluir(this.usuarioSelecionado);
+		new PessoaDTO().excluir(this.pessoaSelecionado);
 		listar();
 	}
 
@@ -104,7 +96,7 @@ public class UsuarioBean implements Serializable {
 	// gravado.
 	public void uploadAction(FileUploadEvent event) {
 		this.arquivo.fileUpload(event, ".jpg", DIRETORIO, DIRETORIOBACKUP);
-		usuario.setFoto(this.arquivo.getNome());
+		pessoa.setFoto(this.arquivo.getNome());
 		this.arquivo.gravar();
 		Util.criarAviso("Foto processada!");
 		Util.executarJavaScript("PF('dlgfoto').hide();");
@@ -113,11 +105,11 @@ public class UsuarioBean implements Serializable {
 	}
 
 	// metodo responsavel por apresentar foto na confirmação do cadastro do
-	// usuario
+	// pessoa
 	public String retornaFoto() {
-		if (this.usuario != null) {
-			if (this.usuario.getFoto() != null) {
-				return "/resources/fotos/" + this.usuario.getFoto();
+		if (this.pessoa != null) {
+			if (this.pessoa.getFoto() != null) {
+				return "/resources/fotos/" + this.pessoa.getFoto();
 			} else {
 				return "/resources/fotos/foto.jpg";
 			}
@@ -136,41 +128,50 @@ public class UsuarioBean implements Serializable {
 	}
 
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
-	public List<Usuario> getUsuarios() {
-		return usuarios;
+
+	public Pessoa getPessoaSelecionado() {
+		return pessoaSelecionado;
 	}
 
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
+
+	public void setPessoaSelecionado(Pessoa pessoaSelecionado) {
+		this.pessoaSelecionado = pessoaSelecionado;
 	}
 
-	public Usuario getUsuarioSelecionado() {
-		return usuarioSelecionado;
+
+	public List<Pessoa> getPessoas() {
+		return pessoas;
 	}
 
-	public void setUsuarioSelecionado(Usuario usuarioSelecionado) {
-		this.usuarioSelecionado = usuarioSelecionado;
+
+	public void setPessoas(List<Pessoa> pessoas) {
+		this.pessoas = pessoas;
 	}
+
 
 	public boolean isVer() {
 		return ver;
 	}
 
+
 	public void setVer(boolean ver) {
 		this.ver = ver;
 	}
 
+
 	public String getTexto() {
 		return texto;
 	}
+
 
 	public void setTexto(String texto) {
 		this.texto = texto;
@@ -205,7 +206,5 @@ public class UsuarioBean implements Serializable {
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
-
-
 
 }

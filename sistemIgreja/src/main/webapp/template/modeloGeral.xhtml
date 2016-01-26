@@ -28,7 +28,7 @@
 		</p:layoutUnit>
 
 		<p:layoutUnit position="west" size="200" header="Menu Principal"
-			resizable="false" closable="false" collapsible="false" rendered="#{usuarioBean.usuario.id eq null}">
+			resizable="false" closable="false" collapsible="false" rendered="#{session.getAttribute('usuarioLogado').id ne null}">
 			<h:form>
 				<p:growl autoUpdate="true" />
 				<p:panelMenu style="width:190px">

@@ -5,15 +5,15 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import entidades.Usuario;
+import entidades.Pessoa;
 
-@FacesConverter(forClass = Usuario.class)
+@FacesConverter(forClass = Pessoa.class)
 public class UsuarioConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String value) {
     	System.out.println("---------------------------------------------");
     	if (value != null && !value.isEmpty()) {
-           return (Usuario) uiComponent.getAttributes().get(value);
+           return (Pessoa) uiComponent.getAttributes().get(value);
         }
         return null;
     }
@@ -21,9 +21,9 @@ public class UsuarioConverter implements Converter {
     @Override
     public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object value) {
     	System.out.println("=========================================");
-    	if (value instanceof Usuario) {
-        	Usuario entity= (Usuario) value;
-            if (entity != null && entity instanceof Usuario && entity.getId() != null) {
+    	if (value instanceof Pessoa) {
+    		Pessoa entity= (Pessoa) value;
+            if (entity != null && entity instanceof Pessoa && entity.getId() != null) {
                 uiComponent.getAttributes().put( entity.getId().toString(), entity);
                 System.out.println(entity.getId().toString());
                 return entity.getId().toString();

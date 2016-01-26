@@ -5,19 +5,35 @@
  */
 package util;
 
+import controladores.UsuarioControlador;
+import entidades.Usuario;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.hibernate.Session;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -26,6 +42,10 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean
 public class Util {
+
+    public static Session pegarSessao() {
+        return HibernateUtil.getSession();
+    }
 
     public static void criarAviso(String txt) {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, txt, txt);
@@ -49,6 +69,13 @@ public class Util {
         RequestContext.getCurrentInstance().update(id);
     }
 
+    public static List<String> atributosClasse(Class classe) {
+        List<String> str = new ArrayList<>();
+        for (Field atr : classe.getDeclaredFields()) {
+            str.add(atr.getName());
+        }
+        return str;
+    }
 
     public static String converterStringEmMD5(String s) {
         try {
@@ -60,8 +87,6 @@ public class Util {
         }
         return s;
     }
-
-
 
     public static Connection pegarConexao() {
 
@@ -100,5 +125,61 @@ public class Util {
         }
     }
 
+    public static Long usuarioLogado() {
+        Usuario usuariol = (Usuario) Util.pegarObjetoDaSessao("usuarioLogado");
+        return usuariol.getId();
+    }
+
+    public String nomeUsuario(Long id) {
+        String hql = "SELECT vo FROM Usuario vo"
+                + " WHERE vo.id=" + id + "";
+        Usuario usuario = new UsuarioControlador().carregar(hql);
+        if (usuario != null) {
+            return usuario.getUsuario();
+        }
+        return "-";
+    }
+
+    static public void zipFolder(String srcFolder, String destZipFile) throws Exception {
+        ZipOutputStream zip;
+        FileOutputStream fileWriter;
+
+        fileWriter = new FileOutputStream(destZipFile);
+        zip = new ZipOutputStream(fileWriter);
+
+        addFolderToZip("", srcFolder, zip);
+        zip.flush();
+        zip.close();
+    }
+
+    static private void addFileToZip(String path, String srcFile, ZipOutputStream zip)
+            throws Exception {
+
+        File folder = new File(srcFile);
+        if (folder.isDirectory()) {
+            addFolderToZip(path, srcFile, zip);
+        } else {
+            byte[] buf = new byte[1024];
+            int len;
+            FileInputStream in = new FileInputStream(srcFile);
+            zip.putNextEntry(new ZipEntry(path + "/" + folder.getName()));
+            while ((len = in.read(buf)) > 0) {
+                zip.write(buf, 0, len);
+            }
+        }
+    }
+
+    static private void addFolderToZip(String path, String srcFolder, ZipOutputStream zip)
+            throws Exception {
+        File folder = new File(srcFolder);
+
+        for (String fileName : folder.list()) {
+            if (path.equals("")) {
+                addFileToZip(folder.getName(), srcFolder + "/" + fileName, zip);
+            } else {
+                addFileToZip(path + "/" + folder.getName(), srcFolder + "/" + fileName, zip);
+            }
+        }
+    }
 
 }

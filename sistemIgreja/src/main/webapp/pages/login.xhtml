@@ -24,57 +24,22 @@
 					<p:messages closable="true" />
 					<p:panelGrid columns="2" styleClass="semBorda">
 						<p:outputLabel value="Usuario:" for="usuario" />
-						<p:inputText id="usuario" value="#{loginBean.login.usuario}"
+						<p:inputText id="usuario" value="#{loginBean.usuario.usuario}"
 							maxlength="32" required="true"
 							requiredMessage="preencha o usuario" placeholder="usuario" />
 
-						<p:outputLabel value="Senha:" for="senha" />
-						<p:password id="senha" value="#{loginBean.login.senha}"
-							maxlength="32" required="true" requiredMessage="preencha a senha"
-							placeholder="usuario" />
-
-						<h:outputLabel value="" />
 						<p:commandButton value="acessar"
 							actionListener="#{loginBean.fazerLogin()}" update="@form"
-							style="width: 150px" onstart="PF('statusDialog').show()"
-							onsuccess="PF('statusDialog').hide();" />
-						<h:outputLabel value="" />
-						<p:commandButton value="esqueceu a senha?" update=":senha"
-							onclick="PF('dlgsenha').show();" immediate="true"
 							style="width: 150px" onstart="PF('statusDialog').show()"
 							onsuccess="PF('statusDialog').hide();" />
 					</p:panelGrid>
 				</p:fieldset>
 			</h:form>
-
-			<p:dialog modal="true" header="Recuperar senha" appendTo="@(body)"
-				widgetVar="dlgsenha" width="600" height="100" resizable="false"
-				closable="true" closeOnEscape="true">
-
-				<h:form id="senha">
-					<p:focus context="@form" />
-					<p:messages autoUpdate="true" closable="true" />
-					<p:panelGrid columns="3" styleClass="semBorda">
-						<p:outputLabel value="Email:" for="email" />
-						<p:inputText value="#{loginBean.login.email}" maxlength="64"
-							size="40" required="true" id="email" placeholder="email"
-							requiredMessage="preencha o campo email"
-							validatorMessage="email invalido">
-							<f:validateRegex
-								pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
-						</p:inputText>
-						<p:commandButton value="processar"
-							actionListener="#{loginBean.recuperarSenha()}" update="@form"
-							style="width: 150px" onstart="PF('statusDialog').show()"
-							onsuccess="PF('statusDialog').hide();" />
-
-					</p:panelGrid>
-
-				</h:form>
-
-			</p:dialog>
 		</ui:define>
-
+		<p:dialog modal="true" header="Recuperar senha" appendTo="@(body)"
+			widgetVar="dlgsenha" width="600" height="100" resizable="false"
+			closable="true" closeOnEscape="true">
+		</p:dialog>
 	</ui:composition>
 
 </body>

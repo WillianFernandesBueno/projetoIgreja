@@ -6,32 +6,31 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import entidades.Usuario;
-import DTO.UsuarioDTO;
+import DTO.PessoaDTO;
+import entidades.Pessoa;
 
 @ManagedBean
 @ViewScoped
 public class IgrejaListMB {
-	private List<Usuario> usuarios;
+	private List<Pessoa> pessoas;
 
 
 	@PostConstruct
 	public void init() {
-		usuarios = listaUsuarios();
+		pessoas = listaPessoas();
 	}
 
-
-	public List<Usuario> getUsuarios() {
-		return usuarios;
+	public List<Pessoa> getPessoas() {
+		return pessoas;
 	}
 
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
+	public void setPessoas(List<Pessoa> pessoas) {
+		this.pessoas = pessoas;
 	}
 
-	public List<Usuario> listaUsuarios(){
+	public List<Pessoa> listaPessoas(){
 		System.out.println("teste");
-		return new UsuarioDTO().obterTodos();
+		return new PessoaDTO().obterTodos();
 	}
 
 }

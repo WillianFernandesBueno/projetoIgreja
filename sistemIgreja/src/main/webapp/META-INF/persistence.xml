@@ -5,7 +5,11 @@
 	<persistence-unit name="sistemaIgreja">
 		<!-- provedor/implementacao do JPA -->
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		
+		<!-- entidade mapeada -->
 		<class>entidades.Igreja</class>
+		<class>entidades.Usuario</class>
+		<class>entidades.Pessoa</class>
 
 		<!-- DADOS CONEXAO -->
 		<properties>

@@ -7,7 +7,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	<ui:composition template="/template/modeloGeral.xhtml">
 		<ui:define name="conteudo">
-			<h:outputText value="willian fernandes de oliveira bueno" />
+			<h:outputText value="#{session.getAttribute('usuarioLogado').usuario}" />
 		</ui:define>
 	</ui:composition>
 </html>
