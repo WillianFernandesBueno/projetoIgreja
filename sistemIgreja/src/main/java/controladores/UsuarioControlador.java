@@ -12,10 +12,7 @@ import java.util.List;
 import util.DAOImpl;
 import util.Util;
 
-/**
- *
- * @author DeividNn
- */
+
 public class UsuarioControlador implements Serializable {
 
     private final DAOImpl<Usuario> dao;

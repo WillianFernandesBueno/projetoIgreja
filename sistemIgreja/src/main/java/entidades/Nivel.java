@@ -5,10 +5,7 @@
  */
 package entidades;
 
-/**
- *
- * @author DeividNn
- */
+
 public enum Nivel {
 
     ADMINISTRADOR, USUARIO, SUPER

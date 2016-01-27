@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import DAO.IgrejaDAO;
 import DTO.UsuarioDTO;
@@ -28,20 +29,22 @@ public class LoginBean {
 	public void listar(){
 		this.igreja = new Igreja();
 		this.igrejas = new ArrayList<Igreja>(new IgrejaDAO().obterTodos());
-		for (Igreja igreja : igrejas) {
-			System.out.println(igreja.getNome());
-		}
 	}
 
 	public void fazerLogin() {
 		Usuario verifica = new UsuarioDTO().buscar(usuario.getUsuario(),usuario.getSenha());
 		if (verifica != null) {
 			Util.criarObjetoDeSessao(verifica, "usuarioLogado");
-			Util.redirecionarPagina("pages/index.xhtml");
+			Util.redirecionarPagina("restrito/index.xhtml");
 		}
 	}
 
-
+    public void fazerLogout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        //redireciona para pagina login
+        Util.redirecionarPagina("");
+    }
+    
 	public Usuario getUsuario() {
 		return usuario;
 	}

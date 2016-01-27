@@ -5,19 +5,17 @@
  */
 package util;
 
-/**
- *
- * @author DeividNn
- */
+
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 import javax.servlet.http.HttpSession;
 
-public class LoginFilter
-        implements PhaseListener {
+public class LoginFilter implements PhaseListener {
 
+	private static final long serialVersionUID = 1L;
+	
     @Override
     public void afterPhase(PhaseEvent pe) {
         FacesContext facesContext = pe.getFacesContext();

@@ -36,10 +36,6 @@ import javax.servlet.http.HttpSession;
 import org.hibernate.Session;
 import org.primefaces.context.RequestContext;
 
-/**
- *
- * @author DeividNn
- */
 @ManagedBean
 public class Util {
 
@@ -94,12 +90,12 @@ public class Util {
 
         try {
             try {
-                Class.forName("org.postgresql.Driver");
+                Class.forName("com.mysql.jdbc.Driver");
             } catch (ClassNotFoundException ex) {
             }
-            conexao = DriverManager.getConnection("jdbc:postgresql://localhost:5432/appjsf",
-                    "deivid",
-                    "deivid");
+            conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/igreja",
+                    "root",
+                    "root");
         } catch (SQLException ex) {
         }
         return conexao;
