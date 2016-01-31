@@ -19,7 +19,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.chart.PieChartModel;
 
+import servicos.PieChartModelPessoa;
 import util.UploadArquivo;
 import util.Util;
 
@@ -43,6 +45,7 @@ public class PessoaBean implements Serializable {
 	private List<Igreja> igrejas;
 	private Igreja igreja;
 	private String foto;
+	private PieChartModel pieModelPessoas;
 
 	@PostConstruct
 	public void init() {
@@ -55,8 +58,9 @@ public class PessoaBean implements Serializable {
 	}
 
 	private void listar() {
-		this.pessoaSelecionado = new Pessoa();
+		setPessoaSelecionado(new Pessoa());
 		setPessoas(new PessoaDTO().obterTodos());
+		setPieModelPessoas(PieChartModelPessoa.inserir(getPessoas()));
 	}
 
 	public void salvar() {
@@ -155,6 +159,15 @@ public class PessoaBean implements Serializable {
 
 	public void setPessoas(List<Pessoa> pessoas) {
 		this.pessoas = pessoas;
+	}
+
+	public PieChartModel getPieModelPessoas() {
+		return pieModelPessoas;
+	}
+
+
+	public void setPieModelPessoas(PieChartModel pieModelPessoas) {
+		this.pieModelPessoas = pieModelPessoas;
 	}
 
 

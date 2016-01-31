@@ -4,10 +4,14 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import enums.Nivel;
 
 @Entity
 @Table(name="usuario")
@@ -25,8 +29,9 @@ public class Usuario implements Serializable{
 	@Column(name="senha")
 	private String senha;
 	
-	@Column(name="status")
-	private String status;
+	@Column(name="nivel")
+	@Enumerated(EnumType.STRING)
+	private Nivel nivel;
 	
 	@ManyToOne
 	private Igreja igreja;
@@ -35,15 +40,17 @@ public class Usuario implements Serializable{
 		super();
 	}
 		
-	public Usuario(Long id, String usuario, String senha, String status,
+	public Usuario(Long id, String usuario, String senha, Nivel nivel,
 			Igreja igreja) {
 		super();
 		this.id = id;
 		this.usuario = usuario;
 		this.senha = senha;
-		this.status = status;
+		this.nivel = nivel;
 		this.igreja = igreja;
 	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -83,12 +90,14 @@ public class Usuario implements Serializable{
 	public String getSenha() {
 		return senha;
 	}
-	public String getStatus() {
-		return status;
+	public Nivel getNivel() {
+		return nivel;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+
+	public void setNivel(Nivel nivel) {
+		this.nivel = nivel;
 	}
+
 	public Igreja getIgreja() {
 		return igreja;
 	}
@@ -96,15 +105,15 @@ public class Usuario implements Serializable{
 		this.igreja = igreja;
 	}
 	
-	
-
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	
+	
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", usuario=" + usuario + ", status="
-				+ status + ", igreja=" + igreja + "]";
+		return "Usuario [id=" + id + ", usuario=" + usuario + ", nivel="
+				+ nivel + ", igreja=" + igreja + "]";
 	}	
 }

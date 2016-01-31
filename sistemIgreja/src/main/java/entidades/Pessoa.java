@@ -8,7 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -96,6 +98,10 @@ public class Pessoa implements Serializable {
 	
 	@ManyToOne
 	private Igreja igreja;
+	
+	@OneToOne
+	@JoinColumn(name = "fk_pessoa")
+	private Pessoa pessoa;
 	
 	public Pessoa() {}
 	public Pessoa(Long id, String nome, String nomeMae, String nomePai,
@@ -341,6 +347,4 @@ public class Pessoa implements Serializable {
 		}
 		this.igreja = igreja;
 	}
-
-
 }

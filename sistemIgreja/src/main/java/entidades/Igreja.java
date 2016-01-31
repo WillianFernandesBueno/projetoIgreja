@@ -4,9 +4,15 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import enums.TipoIgreja;
 
 
 @Entity
@@ -17,34 +23,41 @@ public class Igreja implements Serializable {
 	@GeneratedValue
 	@Column(name="id")
 	private Long id;
-	
+
 	@Column(name="nome")
 	private String nome;
-	
+
 	@Column(name="endereco")
 	private String endereco;
-	
+
 	@Column(name="bairro")
 	private String bairro;
-	
+
 	@Column(name="complemento")
 	private String complemento;
-	
+
 	@Column(name="estado")
 	private String estado;
-	
+
 	@Column(name="cidade")
 	private String cidade;
-	
+
 	@Column(name="cep")
 	private String cep;
-	
+
 	@Column(name="email")
 	private String email;
-	
+
 	@Column(name="telefone")
 	private String telefone;
-	
+
+	@Column(name="sede")
+	private boolean sede;
+
+	@OneToOne
+    @JoinColumn(name="igreja_id")
+	private Igreja igreja;
+
 	public Igreja(Long id, String nome, String endereco, String bairro,
 			String complemento, String estado, String cidade, String cep,
 			String email, String telefone) {
@@ -61,7 +74,7 @@ public class Igreja implements Serializable {
 		this.telefone = telefone;
 	}
 	public Igreja() {}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -93,7 +106,7 @@ public class Igreja implements Serializable {
 				+ ", estado=" + estado + ", cidade=" + cidade + ", cep=" + cep
 				+ ", email=" + email + ", telefone=" + telefone + "]";
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -154,5 +167,19 @@ public class Igreja implements Serializable {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	
+	public boolean isSede() {
+		return sede;
+	}
+	public void setSede(boolean sede) {
+		this.sede = sede;
+	}
+	public Igreja getIgreja() {
+		return igreja;
+	}
+	public void setIgreja(Igreja igreja) {
+		this.igreja = igreja;
+	}	
+
+
+
 }

@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<!-- ==================================================================================================================================================================== -->
+<ui:composition template="/template/modeloGeral.xhtml">
+	<ui:define name="conteudo">
+		<h:form id="igreja">
+			<p:panel header="Gerenciar igrejas" style="text-align: center">
+				<p:panelGrid columns="6">
+					<p:inputText id="txt" value="#{igrejaBean.textoBusca}"
+						style="width:200px" maxlength="32"
+						placeholder="Pesquisar Por Nome">
+
+						<p:ajax event="keyup" update="dataTable"
+							listener="#{igrejaBean.buscar()}" />
+					</p:inputText>
+				</p:panelGrid>
+
+
+				<p:dataTable id="dataTable" value="#{igrejaBean.igrejas}"
+					var="igreja" rowKey="#{igreja.id}" emptyMessage="nenhum usuario"
+					rows="5" paginator="true"
+					selection="#{igrejaBean.igrejaSelecionado}" selectionMode="single">
+
+					<p:column headerText="Id">
+						<h:outputText value="#{igreja.id}" />
+					</p:column>
+
+					<p:column headerText="Nome">
+						<h:outputText value="#{igreja.nome}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<div align="center">
+					<p:panelGrid columns="5" id='opcoes' styleClass="semBorda">
+						<p:commandButton value="Cadastrar"
+							actionListener="#{igrejaBean.inserir()}" update=":cadastrar"
+							onclick="PF('dlgcadastrar').show();" />
+						<p:commandButton value="Alterar"
+							actionListener="#{igrejaBean.alterar()}" update=":cadastrar"
+							onclick="PF('dlgcadastrar').show();" />
+
+						<p:commandButton value="Visualizar"
+							actionListener="#{igrejaBean.alterar()}" update="visualizar"
+							onclick="PF('dlgvisualizar').show();" />
+
+						<p:commandButton value="Deletar"
+							actionListener="#{igrejaBean.excluir()}"
+							update=":igreja:dataTable">
+							<p:confirm header="Confirmation" message="Você tem Certeza?"
+								icon="ui-icon-alert" />
+						</p:commandButton>
+
+
+					</p:panelGrid>
+				</div>
+			</p:panel>
+		</h:form>
+		<!-- ==================================================================================================================================================================== -->
+
+		<p:dialog modal="true" appendTo="@(body)" widgetVar="dlgcadastrar"
+			resizable="false" closable="true" closeOnEscape="true" width="1200"
+			height="550">
+			<h:form id="cadastrar">
+				<p:panel header="Cadastro de Igreja">
+					<p:messages />
+					<div class="ui-fluid">
+						<p:panelGrid columns="2"
+							columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
+							styleClass="ui-panelgrid-blank;">
+
+							<p:outputLabel value="Nome*" />
+							<p:inputText value="#{igrejaBean.igreja.nome}" required="true"
+								label="Nome" styleClass="ui-grid-col-4" />
+
+							<h:outputText value="Email:" />
+							<p:inputText value="#{igrejaBean.igreja.email}" required="false"
+								label="Email" styleClass="ui-grid-col-4" />
+
+							<h:outputText value="Endereço: " />
+							<p:inputText value="#{igrejaBean.igreja.endereco}"
+								styleClass="ui-grid-col-4" />
+
+							<h:outputText value="Bairro: " />
+							<p:inputText value="#{igrejaBean.igreja.bairro}"
+								styleClass="ui-grid-col-4" />
+
+							<h:outputText value="Complemento: " />
+							<p:inputText value="#{igrejaBean.igreja.complemento}"
+								styleClass="ui-grid-col-4" />
+
+							<h:outputText value="Estado " />
+							<p:selectOneMenu id="Estado" value="#{igrejaBean.igreja.estado}"
+								required="true" label="Estado" editable="false">
+								<f:selectItem itemLabel="Acre" itemValue="Acre" />
+								<f:selectItem itemLabel="Alagoas" itemValue="Alagoas" />
+								<f:selectItem itemLabel="Amapá" itemValue="Amapá" />
+								<f:selectItem itemLabel="Amazonas" itemValue="Amazonas" />
+								<f:selectItem itemLabel="Bahia" itemValue="Bahia" />
+								<f:selectItem itemLabel="Ceará" itemValue="Ceará" />
+								<f:selectItem itemLabel="Distrito Federal"
+									itemValue="Distrito Federal" />
+								<f:selectItem itemLabel="Espírito Santo"
+									itemValue="Espírito Santo" />
+								<f:selectItem itemLabel="Goiás" itemValue="Goiás" />
+								<f:selectItem itemLabel="Maranhão" itemValue="Maranhão" />
+								<f:selectItem itemLabel="Mato Grosso" itemValue="Mato Grosso" />
+								<f:selectItem itemLabel="Mato Grosso do Sul"
+									itemValue="Mato Grosso do Sul" />
+								<f:selectItem itemLabel="Minas Gerais" itemValue="Minas Gerais" />
+								<f:selectItem itemLabel="Pará" itemValue="Pará" />
+								<f:selectItem itemLabel="Paraiba" itemValue="Paraiba" />
+								<f:selectItem itemLabel="Paraná" itemValue="Paraná" />
+								<f:selectItem itemLabel="Pernambuco" itemValue="Pernambuco" />
+								<f:selectItem itemLabel="Piauí" itemValue="Piauí" />
+								<f:selectItem itemLabel="Rio de Janeiro"
+									itemValue="Rio de Janeiro" />
+								<f:selectItem itemLabel="Rio Grande do Norte"
+									itemValue="Rio Grande do Norte" />
+								<f:selectItem itemLabel="Rio Grande do Sul"
+									itemValue="Rio Grande do Sul" />
+								<f:selectItem itemLabel="Rondônia" itemValue="Rondônia" />
+								<f:selectItem itemLabel="Roraima" itemValue="Roraima" />
+								<f:selectItem itemLabel="Santa Catarina"
+									itemValue="Santa Catarina" />
+								<f:selectItem itemLabel="São Paulo" itemValue="São Paulo" />
+								<f:selectItem itemLabel="Sergipe" itemValue="Sergipe" />
+								<f:selectItem itemLabel="Tocantins" itemValue="Tocantins" />
+							</p:selectOneMenu>
+
+
+							<h:outputText value="Cidade: " />
+							<p:inputText value="#{igrejaBean.igreja.cidade}" required="true"
+								styleClass="ui-grid-col-2" label="Cidade" />
+
+							<h:outputText value="CEP: " />
+							<p:inputMask value="#{igrejaBean.igreja.cep}" mask="99999-999"
+								styleClass="ui-grid-col-2" required="true"
+								converter="convertInput" label="CEP" />
+
+
+
+							<h:outputText value="Telefone: " />
+							<p:inputMask value="#{igrejaBean.igreja.telefone}"
+								mask="(99)9999-9999" styleClass="ui-grid-col-2" required="false"
+								converter="convertInput" label="Telefone Fixo" />
+								
+							<h:outputText value="Sede" rendered="#{session.getAttribute('usuarioLogado').nivel == 'SUPER'}" />
+							<p:selectBooleanCheckbox value="#{igrejaBean.igreja.sede}"
+								rendered="#{session.getAttribute('usuarioLogado').nivel == 'SUPER'}" />
+
+						</p:panelGrid>
+						<p:toolbar>
+							<f:facet name="left">
+								<p:commandButton value="Salvar"
+									actionListener="#{igrejaBean.salvar}" label="Salvar" />
+							</f:facet>
+						</p:toolbar>
+
+					</div>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+
+		<!-- ==================================================================================================================================================================== -->
+		<p:dialog modal="true" appendTo="@(body)" widgetVar="dlgvisualizar"
+			resizable="false" closable="true" closeOnEscape="true" width="1100"
+			height="500">
+			<h:form id="visualizar">
+
+			</h:form>
+		</p:dialog>
+		<!-- ==================================================================================================================================================================== -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+				update=":form:dataTable" />
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>
+</html>

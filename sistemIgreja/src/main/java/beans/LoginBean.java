@@ -1,6 +1,5 @@
 package beans;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -8,7 +7,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import DAO.IgrejaDAO;
 import DTO.UsuarioDTO;
 import entidades.Igreja;
 import entidades.Usuario;
@@ -24,13 +22,7 @@ public class LoginBean {
 	@PostConstruct
 	public void init() {
 		this.usuario = new Usuario();
-		listar();
 	}
-	public void listar(){
-		this.igreja = new Igreja();
-		this.igrejas = new ArrayList<Igreja>(new IgrejaDAO().obterTodos());
-	}
-
 	public void fazerLogin() {
 		Usuario verifica = new UsuarioDTO().buscar(usuario.getUsuario(),usuario.getSenha());
 		if (verifica != null) {

@@ -22,10 +22,9 @@
 				</p:panelGrid>
 
 
-				<p:dataTable id="dataTable" value="#{pessoaBean.pessoas}"
-					var="user" rowKey="#{user.id}" emptyMessage="nenhum usuario"
-					rows="5" paginator="true"
-					selection="#{pessoaBean.pessoaSelecionado}"
+				<p:dataTable id="dataTable" value="#{pessoaBean.pessoas}" var="user"
+					rowKey="#{user.id}" emptyMessage="nenhum usuario" rows="5"
+					paginator="true" selection="#{pessoaBean.pessoaSelecionado}"
 					selectionMode="single">
 
 					<p:column headerText="Id">
@@ -87,8 +86,8 @@
 						columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
 						styleClass="ui-panelgrid-blank;">
 
-							<p:graphicImage id="pic"
-								url="#{pessoaBean.retornaFoto()}"  height="170" width="165"/>
+						<p:graphicImage id="pic" url="#{pessoaBean.retornaFoto()}"
+							height="170" width="165" />
 
 						<p:panelGrid columns="2"
 							columnClasses="ui-grid-col-2,ui-grid-col-10" layout="grid"
@@ -101,17 +100,17 @@
 								label="Nome" styleClass="ui-grid-col-4" id="nome" />
 
 							<p:outputLabel value="Nome da Mãe*" />
-							<p:inputText value="#{pessoaBean.pessoa.nomeMae}"
-								disabled="true" label="Nome do Mãe" styleClass="ui-grid-col-4" />
+							<p:inputText value="#{pessoaBean.pessoa.nomeMae}" disabled="true"
+								label="Nome do Mãe" styleClass="ui-grid-col-4" />
 
 							<p:outputLabel value="Nome do Pai*" />
-							<p:inputText value="#{pessoaBean.pessoa.nomePai}"
-								disabled="true" label="Nome da Pai" styleClass="ui-grid-col-4" />
+							<p:inputText value="#{pessoaBean.pessoa.nomePai}" disabled="true"
+								label="Nome da Pai" styleClass="ui-grid-col-4" />
 
 							<p:outputLabel value="CPF" />
 							<p:inputMask value="#{pessoaBean.pessoa.cpf}"
-								mask="999.999.999-99" styleClass="ui-grid-col-2"
-								disabled="true" converter="convertInput" label="CPF" />
+								mask="999.999.999-99" styleClass="ui-grid-col-2" disabled="true"
+								converter="convertInput" label="CPF" />
 
 							<h:outputText value="RG" />
 							<p:inputText value="#{pessoaBean.pessoa.rg}" label="RG"
@@ -132,9 +131,8 @@
 
 							<h:outputText value="Situação" />
 							<p:selectOneMenu id="situacao"
-								value="#{pessoaBean.pessoa.situacao}"
-								styleClass="ui-grid-col-2" disabled="true" editable="false"
-								label="Situação">
+								value="#{pessoaBean.pessoa.situacao}" styleClass="ui-grid-col-2"
+								disabled="true" editable="false" label="Situação">
 								<f:selectItem itemLabel="Em Comunhão" itemValue="emComunhao" />
 								<f:selectItem itemLabel="Fora da Comunhão"
 									itemValue="foraComunhao" />
@@ -142,7 +140,8 @@
 							</p:selectOneMenu>
 
 							<h:outputLabel value="Igreja" />
-							<h:selectOneMenu value="#{pessoaBean.pessoa.igreja}" disabled="true">
+							<h:selectOneMenu value="#{pessoaBean.pessoa.igreja}"
+								disabled="true">
 								<f:selectItem itemValue="null" itemLabel="Sel. Igreja" />
 								<f:selectItems value="#{pessoaBean.igrejas}" var="cl"
 									itemValue="#{cl}" itemLabel="#{cl.nome}" />
@@ -186,7 +185,8 @@
 
 
 							<h:outputText value="Dirigente" />
-							<p:selectBooleanCheckbox value="#{pessoaBean.pessoa.dirigente}" disabled="true"/>
+							<p:selectBooleanCheckbox value="#{pessoaBean.pessoa.dirigente}"
+								disabled="true" />
 
 						</p:panelGrid>
 					</p:panelGrid>
@@ -194,23 +194,12 @@
 
 				<p:toolbar>
 					<f:facet name="right">
-						<p:commandButton value="Confirmar" onclick="PF('dlgvisualizar').hide();" update="@form" />
+						<p:commandButton value="Confirmar"
+							onclick="PF('dlgvisualizar').hide();" update="@form" />
 					</f:facet>
 				</p:toolbar>
 			</h:form>
 		</p:dialog>
-
-
-
-
-		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-			<p:commandButton value="Sim" type="button"
-				styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
-				update=":form:dataTable" />
-			<p:commandButton value="Não" type="button"
-				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-		</p:confirmDialog>
-
 
 		<p:dialog modal="true" appendTo="@(body)" widgetVar="dlgcadastrar"
 			resizable="false" closable="true" closeOnEscape="true" width="1200"
@@ -275,9 +264,8 @@
 
 							<h:outputText value="Situação" />
 							<p:selectOneMenu id="situacao"
-								value="#{pessoaBean.pessoa.situacao}"
-								styleClass="ui-grid-col-2" required="false" editable="false"
-								label="Situação">
+								value="#{pessoaBean.pessoa.situacao}" styleClass="ui-grid-col-2"
+								required="false" editable="false" label="Situação">
 								<f:selectItem itemLabel="Em Comunhão" itemValue="emComunhao" />
 								<f:selectItem itemLabel="Fora da Comunhão"
 									itemValue="foraComunhao" />
@@ -286,7 +274,7 @@
 
 							<h:outputLabel value="Igreja" />
 							<h:selectOneMenu value="#{pessoaBean.pessoa.igreja}">
-								<f:selectItem itemValue="null" itemLabel="Sel. classe"/>
+								<f:selectItem itemValue="null" itemLabel="Sel. classe" />
 								<f:selectItems value="#{pessoaBean.igrejas}" var="cl"
 									itemValue="#{cl}" itemLabel="#{cl.nome}" />
 							</h:selectOneMenu>
@@ -399,8 +387,8 @@
 							styleClass="ui-grid-col-1" />
 
 						<h:outputText value="Cidade: " />
-						<p:inputText value="#{pessoaBean.pessoa.cidade}"
-							required="false" styleClass="ui-grid-col-1" label="Cidade" />
+						<p:inputText value="#{pessoaBean.pessoa.cidade}" required="false"
+							styleClass="ui-grid-col-1" label="Cidade" />
 
 						<h:outputText value="CEP: " />
 						<p:inputMask value="#{pessoaBean.pessoa.cep}" mask="99999-999"
@@ -467,6 +455,14 @@
 					oncomplete="PF('statusDialog').hide();removerDesabilitados();" />
 			</h:form>
 		</p:dialog>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+				update=":form:dataTable" />
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
 	</ui:define>
 
 </ui:composition>
