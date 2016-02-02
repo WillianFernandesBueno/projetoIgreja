@@ -36,7 +36,7 @@
 						<p:menuitem value="Principal" outcome="/restrito/index.xhtml"
 							icon="ui-icon ui-icon-home" />
 						<p:menuitem value="Configuração" icon="ui-icon ui-icon-wrench"
-							outcome="/restrito/configuracao.xhtml" />
+							outcome="/restrito/configuracao.xhtml" rendered="#{session.getAttribute('usuarioLogado').nivel == 'SUPER'}"/>
 						<p:menuitem value="Sair" icon="ui-icon ui-icon-power" action="#{loginBean.fazerLogout()}"/>
 					</p:submenu>
 					<p:submenu label="Cadastro">

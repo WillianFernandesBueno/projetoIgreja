@@ -1,6 +1,7 @@
 package DAO;
 
-import interfaces.DAO;
+
+import interfaces.IIgrejaDAO;
 
 import java.util.List;
 
@@ -8,10 +9,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import entidades.Igreja;
 
-public class IgrejaDAO implements DAO<Igreja> {
+public class IgrejaDAO implements IIgrejaDAO<Igreja> {
 	private EntityManager em;
 	public IgrejaDAO() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("sistemaIgreja");  
@@ -33,18 +35,27 @@ public class IgrejaDAO implements DAO<Igreja> {
 		}
 
 	}
-
-	public List<Igreja> obterTodos() {
-		Query qry = em.createQuery("from Igreja");
-		return qry.getResultList();
-	}
-
 	@Override
 	public List<Igreja> buscar(String nome) {
 		Query qry = em.createQuery("select u from Igreja u where u.nome like :param1");
 		qry.setParameter("param1", "%"+nome+"%");
 		return qry.getResultList();
 	}
+	
+	@Override
+	public List<Igreja> buscarSede(String nome) {
+		Query qry = em.createQuery("select u from Igreja u where u.nome like :param1  and u.sede = true");
+		qry.setParameter("param1", "%"+nome+"%");
+		return qry.getResultList();
+	}
+	@Override
+	public List<Igreja> buscarCongregacao(String nome) {
+		Query qry = em.createQuery("select u from Igreja u where u.nome like :param1  and u.sede = false");
+		qry.setParameter("param1", "%"+nome+"%");
+		return qry.getResultList();
+	}
+	
+	
 	@Override
 	public void excluir(Igreja igreja) {
 		em.getTransaction().begin(); // abre uma transação
@@ -60,9 +71,22 @@ public class IgrejaDAO implements DAO<Igreja> {
 
 	}
 	@Override
-	public List<Igreja> obterTodasCongregacoes(Igreja igreja) {
-		Query query = em.createQuery("select i from Igreja i where i.id = :id",Igreja.class);
-		query.setParameter("id", "1");
+	public List<Igreja> listarCongregacao(Igreja igreja) {
+		//Query query = em.createNativeQuery("select i from Igreja i where i.igreja_id = "+igreja.getId());
+		TypedQuery<Igreja> query = em.createNamedQuery("IGREJA.LISTARCOONGREGACAO", Igreja.class); 
+		query.setParameter("id", igreja.getId());
+		List<Igreja> resultado = query.getResultList();
 		return query.getResultList();
 	}
+	@Override
+	public List<Igreja> listarSedes() {
+		Query qry = em.createQuery("select i from Igreja i where i.sede = true");
+		return qry.getResultList();
+	}
+	@Override
+	public List<Igreja> listarIgrejas() {
+		Query qry = em.createQuery("from Igreja");
+		return qry.getResultList();
+	}
+
 }

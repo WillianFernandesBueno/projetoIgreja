@@ -2,6 +2,7 @@ package entidades;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,12 +10,17 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import enums.Nivel;
 
 @Entity
 @Table(name="usuario")
+@NamedQueries({
+	@NamedQuery(name="USUARIO.LISTARUSUARIOS",query="select u from Usuario u where u.igreja.id = :id")
+})
 public class Usuario implements Serializable{
 	private static final long serialVersionUID = 1L;
 

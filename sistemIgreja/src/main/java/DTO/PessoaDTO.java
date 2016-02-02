@@ -2,6 +2,7 @@ package DTO;
 
 import java.util.List;
 
+import entidades.Igreja;
 import entidades.Pessoa;
 import DAO.PessoaDAO;
 
@@ -12,8 +13,8 @@ public void inserir(Pessoa pessoa) {
 		pessoaDao.inserir(pessoa);
 	}
 	
-	public List<Pessoa> obterTodos() {
-		return pessoaDao.obterTodos();
+	public List<Pessoa> ListarPessoas(Igreja igreja) {
+		return pessoaDao.ListarPessoas(igreja);
 	}
 	
 	public List<Pessoa> buscar(String nome){
@@ -23,6 +24,9 @@ public void inserir(Pessoa pessoa) {
 	public void excluir(Pessoa pessoaSelecionado) {
 		pessoaDao.excluir(pessoaSelecionado);
 		
+	}
+	public List<Pessoa> ListarPessoas() {
+		return pessoaDao.ListarPessoas();
 	}
 	
 }

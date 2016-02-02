@@ -5,35 +5,145 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
-
-<!-- ==================================================================================================================================================================== -->
 <ui:composition template="/template/modeloGeral.xhtml">
 	<ui:define name="conteudo">
 		<h:form id="usuario">
-			<p:menubar
-				rendered="#{session.getAttribute('usuarioLogado').nivel == 'SUPER'}">
-				<p:submenu label="Usuario" icon="ui-icon-document">
+			<p:messages id="msgs" />
+			<!-- ======================================================================= -->
+			<!-- =======================TABELA DE LISTA DAS SEDES======================= -->
+			<!-- ======================================================================= -->
 
-					<p:menuitem value="Cadastrar"
-						actionListener="#{usuarioBean.cadastrar()}"
-						update=":cadastrarUsuario"
-						onclick="PF('dlgCadastrarUsuario').show();" />
-				</p:submenu>
+			<p:panel header="Listas de Sedes" style="text-align: center"
+				rendered="#{usuarioBean.verSede eq true}">
+				<p:panelGrid columns="6">
+					<p:inputText id="buscaSede" value="#{usuarioBean.buscaSede}"
+						style="width:200px" maxlength="32"
+						placeholder="Pesquisar Por Nome">
 
-				<p:submenu label="Igreja" icon="ui-icon-document">
+						<p:ajax event="keyup" update="tableSede"
+							listener="#{usuarioBean.buscarSede()}" />
+					</p:inputText>
+				</p:panelGrid>
+				<p:dataTable id="tableSede" value="#{usuarioBean.igrejas}"
+					var="igreja" rowKey="#{igreja.id}" emptyMessage="nenhum usuario"
+					rows="5" paginator="true"
+					selection="#{usuarioBean.igrejaSelecionado}" selectionMode="single">
 
-					<p:menuitem value="Cadastrar" update="cadastrarIgreja"
-						onclick="PF('dlgCadastrarIgreja').show();" />
-				</p:submenu>
+					<p:column headerText="ID">
+						<h:outputText value="#{igreja.id}" />
+					</p:column>
 
+					<p:column headerText="NOME">
+						<h:outputText value="#{igreja.nome}" />
+					</p:column>
 
+					<p:column headerText="CIDADE">
+						<h:outputText value="#{igreja.cidade}" />
+					</p:column>
 
-			</p:menubar>
+					<p:column headerText="ESTADO">
+						<h:outputText value="#{igreja.estado}" />
+					</p:column>
+
+					<p:column headerText="CEP">
+						<h:outputText value="#{igreja.cep}" />
+					</p:column>
+
+					<p:column headerText="EMAIL">
+						<h:outputText value="#{igreja.email}" />
+					</p:column>
+
+					<p:column headerText="TELEFONE">
+						<h:outputText value="#{igreja.telefone}" />
+					</p:column>
+
+				</p:dataTable>
+				<div align="center">
+					<p:panelGrid columns="5" styleClass="semBorda">
+						<p:commandButton value="Cadastrar Usuario"
+							actionListener="#{usuarioBean.cadastrar()}"
+							update=":cadastrarUsuario"
+							onclick="PF('dlgCadastrarUsuario').show();" />
+
+						<p:commandButton value="Listar Usuarios"
+							actionListener="#{usuarioBean.listarUsuarios()}"
+							update=":listarUsuario" onclick="PF('dlgListarUsuario').show();" />
+
+						<p:commandButton value="Listar Congregações"
+							actionListener="#{usuarioBean.listaIgreja()}" update="usuario" />
+					</p:panelGrid>
+				</div>
+			</p:panel>
+			<!-- ======================================================================= -->
+			<!-- ====================TABELA DE LISTA DAS CONGREGACOES=================== -->
+			<!-- ======================================================================= -->
+			<p:panel header="Listas de Congregaçoes" style="text-align: center"
+				rendered="#{usuarioBean.verCongregacao eq true}">
+				<p:panelGrid columns="6">
+					<p:inputText id="buscaCongregacao"
+						value="#{usuarioBean.buscaCongregacao}" style="width:200px"
+						maxlength="32" placeholder="Pesquisar Por Nome">
+
+						<p:ajax event="keyup" update="tableCongregacao"
+							listener="#{usuarioBean.buscarCongregacao()}" />
+					</p:inputText>
+				</p:panelGrid>
+				<p:dataTable id="tableCongregacao"
+					value="#{usuarioBean.congregacoes}" var="congregacao"
+					rowKey="#{congregacao.id}" emptyMessage="nenhum usuario" rows="10"
+					paginator="true" selection="#{usuarioBean.igrejaSelecionado}"
+					selectionMode="single">
+
+					<p:column headerText="ID">
+						<h:outputText value="#{congregacao.id}" />
+					</p:column>
+
+					<p:column headerText="NOME">
+						<h:outputText value="#{congregacao.nome}" />
+					</p:column>
+
+					<p:column headerText="CIDADE">
+						<h:outputText value="#{congregacao.cidade}" />
+					</p:column>
+
+					<p:column headerText="ESTADO">
+						<h:outputText value="#{congregacao.estado}" />
+					</p:column>
+
+					<p:column headerText="CEP">
+						<h:outputText value="#{congregacao.cep}" />
+					</p:column>
+
+					<p:column headerText="EMAIL">
+						<h:outputText value="#{congregacao.email}" />
+					</p:column>
+
+					<p:column headerText="TELEFONE">
+						<h:outputText value="#{congregacao.telefone}" />
+					</p:column>
+
+				</p:dataTable>
+				<div align="center">
+					<p:panelGrid columns="5" styleClass="semBorda">
+						<p:commandButton value="Cadastrar Usuario"
+							actionListener="#{usuarioBean.cadastrar()}"
+							update=":cadastrarUsuario"
+							onclick="PF('dlgCadastrarUsuario').show();" />
+
+						<p:commandButton value="Listar Usuarios"
+							actionListener="#{usuarioBean.listarUsuarios()}"
+							update=":listarUsuario" onclick="PF('dlgListarUsuario').show();" />
+						<p:commandButton value="Voltar" update="usuario"
+							actionListener="#{usuarioBean.desabilitaVerLista()}" />
+					</p:panelGrid>
+				</div>
+			</p:panel>
 
 		</h:form>
 
-		<!-- ==================================================================================================================================================================== -->
-
+		<!-- ======================================================================= -->
+		<!-- ====================DIALOG DE CADASTRO DE USUARIOS===================== -->
+		<!-- ======================================================================= -->
 		<p:dialog modal="true" appendTo="@(body)"
 			widgetVar="dlgCadastrarUsuario" resizable="false" closable="true"
 			closeOnEscape="true" width="600" height="250">
@@ -56,29 +166,18 @@
 							styleClass="ui-grid-col-4" />
 
 						<p:outputLabel value="Nivel:" />
-						<p:selectOneMenu id='nivel' value="#{usuarioBean.usuario.nivel}">
-							<f:selectItem itemLabel="selecione..." />
-							<f:selectItem itemValue="ADMINISTRADOR" itemLabel="ADMINISTRADOR" />
-							<f:selectItem itemValue="USUARIO" itemLabel="USUARIO" />
+						<p:selectOneMenu id="areas" value="#{usuarioBean.usuario.nivel}">
+							<f:selectItems value="#{usuarioBean.retornaNivel()}" />
 						</p:selectOneMenu>
-
-
-						<h:outputLabel value="Igreja" />
-						<h:selectOneMenu value="#{usuarioBean.usuario.igreja}"
-							disabled="false">
-							<f:selectItem itemValue="null" itemLabel="Sel. Igreja" />
-							<f:selectItems value="#{usuarioBean.igrejas}" var="cl"
-								itemValue="#{cl}" itemLabel="#{cl.nome}" />
-						</h:selectOneMenu>
-				
 					</p:panelGrid>
 				</p:panel>
 
 
 				<p:toolbar>
 					<f:facet name="right">
-						<p:commandButton value="Confirmar" rendered="#{usuarioBean.ver eq true}"
-							actionListener="#{usuarioBean.salvar()}" update="@form"/>
+						<p:commandButton value="Confirmar"
+							rendered="#{usuarioBean.ver eq true}"
+							actionListener="#{usuarioBean.salvar()}" update="@form" />
 
 						<p:commandButton value="cancelar" update="@form"
 							oncomplete="PF('dlgCadastrarUsuario').hide();" />
@@ -89,6 +188,46 @@
 			</h:form>
 
 		</p:dialog>
+
+		<!-- ======================================================================= -->
+		<!-- ====================VISUALIZAR USUARIOS DE UMA IGREJA================== -->
+		<!-- ======================================================================= -->
+
+		<p:dialog modal="true" appendTo="@(body)" widgetVar="dlgListarUsuario"
+			resizable="false" closable="true" closeOnEscape="true" width="600"
+			height="250">
+			<h:form id="listarUsuario">
+				<p:dataTable id="tableListaUsuario" value="#{usuarioBean.usuarios}"
+					var="usuario" rowKey="#{usuario.id}" emptyMessage="nenhum usuario"
+					rows="5" paginator="true"
+					selection="#{usuarioBean.usuarioSelecionado}"
+					selectionMode="single">
+
+					<p:column headerText="Id">
+						<h:outputText value="#{usuario.id}" />
+					</p:column>
+
+					<p:column headerText="Nome">
+						<h:outputText value="#{usuario.usuario}" />
+					</p:column>
+
+				</p:dataTable>
+				<div align="center">
+					<p:panelGrid columns="5" id='opcoes' styleClass="semBorda">
+
+						<p:commandButton value="Deletar"
+							actionListener="#{usuarioBean.excluir()}"
+							update="tableListaUsuario">
+							<p:confirm header="Confirmation" message="Você tem Certeza?"
+								icon="ui-icon-alert" />
+						</p:commandButton>
+
+					</p:panelGrid>
+				</div>
+			</h:form>
+		</p:dialog>
+
+
 
 		<!-- ==================================================================================================================================================================== -->
 
@@ -111,7 +250,13 @@
 
 		</p:dialog>
 
-
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+				update=":form:dataTable" />
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
 
 	</ui:define>
 

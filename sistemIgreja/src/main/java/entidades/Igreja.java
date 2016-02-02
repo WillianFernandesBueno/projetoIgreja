@@ -1,22 +1,28 @@
 package entidades;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import enums.TipoIgreja;
 
 
 @Entity
 @Table(name="igreja")
+@NamedQueries({
+	@NamedQuery(name="IGREJA.LISTARCOONGREGACAO",query="select i from Igreja i where i.igreja.id = :id")
+//	@NamedQuery(name="IGREJA.LISTARCOONGREGACAO",query="select i from Igreja i where i.id = :id")
+})
 public class Igreja implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -54,9 +60,15 @@ public class Igreja implements Serializable {
 	@Column(name="sede")
 	private boolean sede;
 
-	@OneToOne
+	@ManyToOne
     @JoinColumn(name="igreja_id")
 	private Igreja igreja;
+	
+	@OneToMany (cascade = CascadeType.ALL , mappedBy = "igreja")
+	private List<Usuario> usuarios;
+	
+	@OneToMany (cascade = CascadeType.ALL, mappedBy = "igreja")
+	private List<Pessoa> pessoas;
 
 	public Igreja(Long id, String nome, String endereco, String bairro,
 			String complemento, String estado, String cidade, String cep,
@@ -178,8 +190,21 @@ public class Igreja implements Serializable {
 	}
 	public void setIgreja(Igreja igreja) {
 		this.igreja = igreja;
-	}	
-
+	}
+	
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+	public List<Pessoa> getPessoas() {
+		return pessoas;
+	}
+	public void setPessoas(List<Pessoa> pessoas) {
+		this.pessoas = pessoas;
+	}
+	
 
 
 }

@@ -13,17 +13,31 @@ public class IgrejaDTO {
 	public List<Igreja> buscar(String busca) {
 		return igrejaDAO.buscar(busca);
 	}
-	public List<Igreja> obterTodos() {
-		return igrejaDAO.obterTodos();
+	
+	public List<Igreja> buscarSede(String busca) {
+		return igrejaDAO.buscarSede(busca);
 	}
 	
-	public List<Igreja> obterTodasCongregacoes(Igreja igreja) {
-		return igrejaDAO.obterTodasCongregacoes(igreja);
+	public List<Igreja> buscarCongregacao(String busca) {
+		return igrejaDAO.buscarCongregacao(busca);
+	}
+	
+	public List<Igreja> listarIgrejas() {
+		return igrejaDAO.listarIgrejas();
+	}
+	
+	public List<Igreja> listarSedes() {
+		return igrejaDAO.listarSedes();
+	}
+	
+	public List<Igreja> listarCongregacao(Igreja igreja) {
+		return igrejaDAO.listarCongregacao(igreja);
 	}
 	
 	public void excluir(Igreja igrejaSelecionado) {
 		igrejaDAO.excluir(igrejaSelecionado);
 		
 	}
+
 	
 }

@@ -9,6 +9,7 @@ import DAO.IgrejaDAO;
 import DTO.PessoaDTO;
 import entidades.Igreja;
 import entidades.Pessoa;
+import entidades.Usuario;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,9 +20,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.chart.PieChartModel;
 
-import servicos.PieChartModelPessoa;
 import util.UploadArquivo;
 import util.Util;
 
@@ -37,6 +36,7 @@ public class PessoaBean implements Serializable {
 	private static final String DIRETORIO = "/resources/fotos/";
 	private static final String DIRETORIOBACKUP = "C:/Users/Willian Bueno/Projetos/imagens/";
 	private UploadArquivo arquivo;
+	private Usuario usuario;
 	private Pessoa pessoa;
 	private Pessoa pessoaSelecionado;
 	private List<Pessoa> pessoas;
@@ -45,7 +45,6 @@ public class PessoaBean implements Serializable {
 	private List<Igreja> igrejas;
 	private Igreja igreja;
 	private String foto;
-	private PieChartModel pieModelPessoas;
 
 	@PostConstruct
 	public void init() {
@@ -58,9 +57,13 @@ public class PessoaBean implements Serializable {
 	}
 
 	private void listar() {
-		setPessoaSelecionado(new Pessoa());
-		setPessoas(new PessoaDTO().obterTodos());
-		setPieModelPessoas(PieChartModelPessoa.inserir(getPessoas()));
+		this.usuario = (Usuario) Util.pegarObjetoDaSessao("usuarioLogado");
+		this.pessoaSelecionado = new Pessoa();
+		if(usuario.getIgreja()!=null){
+			this.pessoas = new PessoaDTO().ListarPessoas(usuario.getIgreja());
+		}else{
+			this.pessoas = new PessoaDTO().ListarPessoas();
+		}
 	}
 
 	public void salvar() {
@@ -76,14 +79,14 @@ public class PessoaBean implements Serializable {
 		this.pessoa = new Pessoa();
 		arquivo = new UploadArquivo();
 		this.igreja = new Igreja();
-		this.igrejas = new ArrayList<Igreja>(new IgrejaDAO().obterTodos());
+		this.igrejas = new ArrayList<Igreja>(new IgrejaDAO().listarIgrejas());
 		this.foto = retornaFoto();
 	}
 	public void alterar() {
 		this.pessoa = getPessoaSelecionado();
 		arquivo = new UploadArquivo();
 		this.igreja = new Igreja();
-		this.igrejas = new ArrayList<Igreja>(new IgrejaDAO().obterTodos());
+		this.igrejas = new ArrayList<Igreja>(new IgrejaDAO().listarIgrejas());
 	}
 
 	public void excluir() {
@@ -161,16 +164,6 @@ public class PessoaBean implements Serializable {
 		this.pessoas = pessoas;
 	}
 
-	public PieChartModel getPieModelPessoas() {
-		return pieModelPessoas;
-	}
-
-
-	public void setPieModelPessoas(PieChartModel pieModelPessoas) {
-		this.pieModelPessoas = pieModelPessoas;
-	}
-
-
 	public boolean isVer() {
 		return ver;
 	}
@@ -219,5 +212,16 @@ public class PessoaBean implements Serializable {
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
+
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
 
 }

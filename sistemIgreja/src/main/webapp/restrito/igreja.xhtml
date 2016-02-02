@@ -10,56 +10,78 @@
 <ui:composition template="/template/modeloGeral.xhtml">
 	<ui:define name="conteudo">
 		<h:form id="igreja">
-			<p:panel header="Gerenciar igrejas" style="text-align: center">
-				<p:panelGrid columns="6">
-					<p:inputText id="txt" value="#{igrejaBean.textoBusca}"
-						style="width:200px" maxlength="32"
-						placeholder="Pesquisar Por Nome">
+			<p:panel rendered="#{igrejaBean.ver eq true}">
+				<p:panel header="Gerenciar igrejas" style="text-align: center">
+					<p:panelGrid columns="6">
+						<p:inputText id="txt" value="#{igrejaBean.textoBusca}"
+							style="width:200px" maxlength="32"
+							placeholder="Pesquisar Por Nome">
 
-						<p:ajax event="keyup" update="dataTable"
-							listener="#{igrejaBean.buscar()}" />
-					</p:inputText>
-				</p:panelGrid>
-
-
-				<p:dataTable id="dataTable" value="#{igrejaBean.igrejas}"
-					var="igreja" rowKey="#{igreja.id}" emptyMessage="nenhum usuario"
-					rows="5" paginator="true"
-					selection="#{igrejaBean.igrejaSelecionado}" selectionMode="single">
-
-					<p:column headerText="Id">
-						<h:outputText value="#{igreja.id}" />
-					</p:column>
-
-					<p:column headerText="Nome">
-						<h:outputText value="#{igreja.nome}" />
-					</p:column>
-
-				</p:dataTable>
-
-				<div align="center">
-					<p:panelGrid columns="5" id='opcoes' styleClass="semBorda">
-						<p:commandButton value="Cadastrar"
-							actionListener="#{igrejaBean.inserir()}" update=":cadastrar"
-							onclick="PF('dlgcadastrar').show();" />
-						<p:commandButton value="Alterar"
-							actionListener="#{igrejaBean.alterar()}" update=":cadastrar"
-							onclick="PF('dlgcadastrar').show();" />
-
-						<p:commandButton value="Visualizar"
-							actionListener="#{igrejaBean.alterar()}" update="visualizar"
-							onclick="PF('dlgvisualizar').show();" />
-
-						<p:commandButton value="Deletar"
-							actionListener="#{igrejaBean.excluir()}"
-							update=":igreja:dataTable">
-							<p:confirm header="Confirmation" message="Você tem Certeza?"
-								icon="ui-icon-alert" />
-						</p:commandButton>
-
-
+							<p:ajax event="keyup" update="dataTable"
+								listener="#{igrejaBean.buscar()}" />
+						</p:inputText>
 					</p:panelGrid>
-				</div>
+
+
+					<p:dataTable id="dataTable" value="#{igrejaBean.igrejas}"
+						var="igreja" rowKey="#{igreja.id}" emptyMessage="nenhum usuario"
+						rows="5" paginator="true"
+						selection="#{igrejaBean.igrejaSelecionado}" selectionMode="single">
+
+						<p:column headerText="ID">
+							<h:outputText value="#{igreja.id}" />
+						</p:column>
+
+						<p:column headerText="NOME">
+							<h:outputText value="#{igreja.nome}" />
+						</p:column>
+
+						<p:column headerText="CIDADE">
+							<h:outputText value="#{igreja.cidade}" />
+						</p:column>
+
+						<p:column headerText="ESTADO">
+							<h:outputText value="#{igreja.estado}" />
+						</p:column>
+
+						<p:column headerText="CEP">
+							<h:outputText value="#{igreja.cep}" />
+						</p:column>
+
+						<p:column headerText="EMAIL">
+							<h:outputText value="#{igreja.email}" />
+						</p:column>
+
+						<p:column headerText="TELEFONE">
+							<h:outputText value="#{igreja.telefone}" />
+						</p:column>
+
+					</p:dataTable>
+
+					<div align="center">
+						<p:panelGrid columns="5" id='opcoes' styleClass="semBorda">
+							<p:commandButton value="Cadastrar"
+								actionListener="#{igrejaBean.inserir()}" update=":cadastrar"
+								onclick="PF('dlgcadastrar').show();" />
+							<p:commandButton value="Alterar"
+								actionListener="#{igrejaBean.alterar()}" update=":cadastrar"
+								onclick="PF('dlgcadastrar').show();" />
+
+							<p:commandButton value="Visualizar"
+								actionListener="#{igrejaBean.alterar()}" update="visualizar"
+								onclick="PF('dlgvisualizar').show();" />
+
+							<p:commandButton value="Deletar"
+								actionListener="#{igrejaBean.excluir()}"
+								update=":igreja:dataTable">
+								<p:confirm header="Confirmation" message="Você tem Certeza?"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+
+
+						</p:panelGrid>
+					</div>
+				</p:panel>
 			</p:panel>
 		</h:form>
 		<!-- ==================================================================================================================================================================== -->
@@ -150,8 +172,9 @@
 							<p:inputMask value="#{igrejaBean.igreja.telefone}"
 								mask="(99)9999-9999" styleClass="ui-grid-col-2" required="false"
 								converter="convertInput" label="Telefone Fixo" />
-								
-							<h:outputText value="Sede" rendered="#{session.getAttribute('usuarioLogado').nivel == 'SUPER'}" />
+
+							<h:outputText value="Sede"
+								rendered="#{session.getAttribute('usuarioLogado').nivel == 'SUPER'}" />
 							<p:selectBooleanCheckbox value="#{igrejaBean.igreja.sede}"
 								rendered="#{session.getAttribute('usuarioLogado').nivel == 'SUPER'}" />
 

@@ -1,6 +1,6 @@
 package DAO;
 
-import interfaces.DAO;
+import interfaces.IPessoaDAO;
 
 import java.util.List;
 
@@ -15,12 +15,14 @@ import javax.persistence.Query;
 
 
 
+import javax.persistence.TypedQuery;
+
 import entidades.Igreja;
 import entidades.Pessoa;
 
-public class PessoaDAO implements DAO<Pessoa>{
+public class PessoaDAO implements IPessoaDAO<Pessoa>{
 	private EntityManager em;
-	
+
 	public PessoaDAO() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("sistemaIgreja");  
 		em = factory.createEntityManager();
@@ -28,7 +30,7 @@ public class PessoaDAO implements DAO<Pessoa>{
 	public void close() {
 		em.close();
 	}
-	
+
 	public void inserir(Pessoa pessoa) {	
 		em.getTransaction().begin(); // abre uma transação
 		try {
@@ -79,15 +81,20 @@ public class PessoaDAO implements DAO<Pessoa>{
 		qry.setParameter("param2", senha);
 		return (Pessoa) qry.getSingleResult();
 	}
-	
+
 	@Override
-	public List<Pessoa> obterTodos() {
-//		Query qry = em.createQuery("from igreja");
-//		return qry.getResultList();
-		Query qry = em.createQuery("from Pessoa");
-		return qry.getResultList();
+	public List<Pessoa> ListarPessoas(Igreja igreja) {
+		TypedQuery<Pessoa> query = em.createNamedQuery("PESSOA.LISTARPESSOA", Pessoa.class); 
+		query.setParameter("id", igreja.getId());
+		List<Pessoa> resultado = query.getResultList();
+		return query.getResultList();
+
+		//		Query qry = em.createQuery("from igreja");
+		//		return qry.getResultList();
+		//		Query qry = em.createQuery("from Pessoa");
+		//		return qry.getResultList();
 	}
-	
+
 	@Override
 	public List<Pessoa> buscar(String nome) {
 		Query qry = em.createQuery("select u from Pessoa u where u.nome like :param1");
@@ -96,9 +103,10 @@ public class PessoaDAO implements DAO<Pessoa>{
 
 	}
 	@Override
-	public List<Igreja> obterTodasCongregacoes(Pessoa t) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Pessoa> ListarPessoas() {
+		Query qry = em.createQuery("from Pessoa");
+		return qry.getResultList();
 	}
+
 
 }

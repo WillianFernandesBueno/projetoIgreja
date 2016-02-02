@@ -1,25 +1,16 @@
 package beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.primefaces.event.FlowEvent;
-
 import entidades.Igreja;
-import entidades.Pessoa;
 import entidades.Usuario;
-import enums.TipoIgreja;
-import util.FacesUtil;
-import util.UploadArquivo;
 import util.Util;
-import DAO.IgrejaDAO;
 import DTO.IgrejaDTO;
-import DTO.PessoaDTO;
 
 @ManagedBean
 @ViewScoped
@@ -30,22 +21,29 @@ public class IgrejaBean implements Serializable {
 	private Igreja igrejaSelecionado;
 	private String textoBusca;
 	private Usuario usuario;
-	
+	private boolean ver;
 	@PostConstruct
 	public void init() {
 		listar();
 	}	
 	private void listar() {
+		this.usuario = (Usuario) Util.pegarObjetoDaSessao("usuarioLogado");
 		this.igrejaSelecionado = new Igreja();
-		//setIgrejas(new IgrejaDTO().obterTodos());
-		setIgrejas(new IgrejaDTO().obterTodasCongregacoes(usuario.getIgreja()));
-		
+		if(usuario.getIgreja()!=null){
+			if(usuario.getIgreja().isSede()==true){
+				setVer(true);
+				setIgrejas(new IgrejaDTO().listarCongregacao(usuario.getIgreja()));							
+			}else{
+				setVer(false);
+				setIgreja(new Igreja());
+			}
+		}else{
+			setVer(true);
+			setIgrejas(new IgrejaDTO().listarIgrejas());			
+		}
 	}
 	public void inserir() {
-		this.usuario = (Usuario) Util.pegarObjetoDaSessao("usuarioLogado");
 		this.igreja = new Igreja();
-		this.igreja = new Igreja();
-		this.igrejas = new ArrayList<Igreja>(new IgrejaDAO().obterTodos());
 	}
 	
 	public void alterar() {
@@ -105,6 +103,12 @@ public class IgrejaBean implements Serializable {
 	}
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	public boolean isVer() {
+		return ver;
+	}
+	public void setVer(boolean ver) {
+		this.ver = ver;
 	}
 	
 

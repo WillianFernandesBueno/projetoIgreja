@@ -7,5 +7,16 @@ package enums;
 
 
 public enum Nivel {
-    ADMINISTRADOR, USUARIO, SUPER
+	//ADMINISTRADOR, SUPER, USUARIO
+	ADMINISTRADOR("ADMINISTRADOR"), SECRETARIO("SECRETARIO"),SUPER("SUPER");
+
+	private final String nivel; 
+
+	Nivel(String label){ 
+		this.nivel = label; 
+	} 
+	public String getValor(){ 
+		return nivel; 
+	}
+
 }

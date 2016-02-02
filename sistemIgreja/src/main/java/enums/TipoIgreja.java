@@ -10,7 +10,4 @@ public enum TipoIgreja {
 	public String getValor(){ 
 		return label; 
 	}
-	
-	
-
 }
