@@ -51,11 +51,17 @@ public class PessoaBean implements Serializable {
 		listar();
 	}
 
-
+	/*=======================================================
+	 *=============BUSCA PESSOAS PELO NOME=================== 
+	 * =====================================================*/
 	public void buscar() {
 		pessoas = new PessoaDTO().buscar(getTexto());
 	}
 
+	/*=======================================================
+	 *=============LISTA PESSOAS QUE ESTAO RELACIONADAS====== 
+	 *===============A IGREJA DO USUARIO LOGADO============== 
+	 *======================================================*/
 	private void listar() {
 		this.usuario = (Usuario) Util.pegarObjetoDaSessao("usuarioLogado");
 		this.pessoaSelecionado = new Pessoa();
@@ -65,9 +71,13 @@ public class PessoaBean implements Serializable {
 			this.pessoas = new PessoaDTO().ListarPessoas();
 		}
 	}
-
+	/*=======================================================
+	 *===========METODO RESPONSAVEL POR SALVAR PESSOA======== 
+	 *==========RELACIONANDO ID PESSOA COM FK IGREJA_ID====== 
+	 *======================================================*/
 	public void salvar() {
 		this.arquivo.back();
+		this.pessoa.setIgreja(usuario.getIgreja());
 		new PessoaDTO().inserir(getPessoa());
 		listar();
 		Util.atualizarForm("usuario");
@@ -75,18 +85,25 @@ public class PessoaBean implements Serializable {
 		resetarFormulario();
 	}
 
+	/*=======================================================
+	 *===========METODO RESPONSAVEL POR INSTANCIAR ========== 
+	 *===========OS OBJETOS DO CADASTRO DE PESSOAS=========== 
+	 *======================================================*/
 	public void inserir() {
 		this.pessoa = new Pessoa();
-		arquivo = new UploadArquivo();
+		this.arquivo = new UploadArquivo();
 		this.igreja = new Igreja();
-		this.igrejas = new ArrayList<Igreja>(new IgrejaDAO().listarIgrejas());
 		this.foto = retornaFoto();
 	}
+	
+	/*=======================================================
+	 *=============ALTERA DADOS DO OBJETO PESSOA============= 
+	 *======================================================*/
 	public void alterar() {
 		this.pessoa = getPessoaSelecionado();
-		arquivo = new UploadArquivo();
-		this.igreja = new Igreja();
-		this.igrejas = new ArrayList<Igreja>(new IgrejaDAO().listarIgrejas());
+//		this.arquivo = new UploadArquivo();
+//		this.igreja = new Igreja();
+//		this.igrejas = new ArrayList<Igreja>(new IgrejaDAO().listarIgrejas());
 	}
 
 	public void excluir() {
